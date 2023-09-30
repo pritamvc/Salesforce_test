@@ -1,0 +1,11 @@
+<apex:page standardController="Co_Applicant__c" extensions="ApplicantPDFGenerator" renderAs="pdf"  applyHtmlTag="false" showHeader="false" standardStylesheets="false" >
+    
+    <apex:form >
+       
+       <apex:repeat value="{!allFieldName}" var="key"> 
+           <apex:inputField value="{!sobj[key]}"/><br/>
+       </apex:repeat>
+        
+    </apex:form>
+    
+</apex:page>

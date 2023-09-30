@@ -1,0 +1,88 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 08-11-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+        <div class="slds-grid">
+            <div class="slds-col slds-order_3">
+                <span> </span>
+            </div>
+            <div class="slds-col slds-order_1">
+                <span> </span>
+            </div>
+            <div class="slds-order_2">
+                <span>
+                    <div class="card-alignment host">
+                        <lightning-card icon-name="custom:custom19">
+                            <h1 slot="title">
+                                <div style="font-size: 20px;color: orange;">Upload Leads</div>
+                            </h1>
+                            <div class="slds-m-horizontal_small">
+                                <lightning-layout vertical-align="left" horizontal-align="left"
+                                    style="margin-left: 601px;margin-top: -31px;">
+                                    <div>
+                                        <lightning-button icon-name="utility:download" label="Download Template"
+                                            title="Download CSV File" onclick={downloadTemplate} variant="brand"
+                                            slot="actions">
+                                        </lightning-button>
+                                    </div>
+                                </lightning-layout>
+                            </div>
+
+                            <div slot="footer" style="min-height: 32px;">
+                                <lightning-layout if:true={loading}>
+                                    <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+                                        <lightning-progress-bar value={loadingProgress} variant="circular">
+                                        </lightning-progress-bar>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item padding="around-small" size="12" small-device-size="3"
+                                    medium-device-size="3" large-device-size="6">
+                                    <div>
+                                        <lightning-combobox name='Stage' label='Stage' required="true" value='Fresh'
+                                            options={AppliCategoryOptions} onchange={handleInstituteSelection}>
+                                        </lightning-combobox>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="12" small-device-size="3"
+                                    medium-device-size="3" large-device-size="6" style="padding-top:30px ;">
+                                    <div>
+                                        <lightning-input class="checkbox-padding" type="checkbox" name="Consent"
+                                            label="Consent" field-level-help={BulkLeadUploadConsentHelpText}
+                                            onchange={handleInstituteSelection}></lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item padding="around-small" size="12" small-device-size="3"
+                                    medium-device-size="3" large-device-size="6">
+                                    <lightning-record-edit-form object-api-name="Lead" id="createContactForm">
+                                        <lightning-input-field label="Account Partner" field-name="Account_Partner__c"
+                                            name="AccountPartner" onchange={handleInstituteSelection}
+                                            variant="label-standard" required>
+                                        </lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="12" small-device-size="3"
+                                    medium-device-size="3" large-device-size="6" style="padding-top:12px ;">
+                                    <div if:true={recordId}>
+                                        <div style="margin-left: 5px;">Upload CSV</div>
+                                        <lightning-input label="Upload CSV" name="Import Lines"
+                                            class="slds-form-element" accept={acceptedFormats}
+                                            onchange={handleImportLines} type="file" variant="label-hidden">
+                                        </lightning-input>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-card>
+                    </div>
+                </span>
+            </div>
+        </div>
+</template>

@@ -1,0 +1,380 @@
+<template>
+    <template for:each={record} for:item="rec">
+       {rec}
+    </template>
+    <!-- <div class={sectionClass}>
+
+        <lightning-accordion  onsectiontoggle={handleAccordionClick} class="title1" >
+        <template for:each={TypeOptions} for:item="rec">
+            <lightning-accordion-section   class="slds-col slds-size_4-of-4 slds-p-around_small" 
+            name={rec.value}
+            label={rec.label} key={rec.Id}
+            >
+            <template if:true={toggler} >
+            <div class="slds-grid slds-wrap" >
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" variant="label-standard"
+                    accept=".png, .pdf, .jpg, .jpeg" 
+                    label="Aadhar Front" required="true"
+                    onchange={aadharFront}
+                    data-id={rec.Id} >
+                   </lightning-input>
+                <template if:true={appdoc1}>
+                    <p data-id={rec.Id} >{aadharFrontName}</p>
+                </template>
+                
+                </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" variant="label-standard"
+                accept=".png, .pdf, .jpg, .jpeg" 
+                label="Aadhar Back" required="true"  data-id={rec.Id}
+                onchange={aadharBack}>
+            </lightning-input>
+            <template if:true={apAadharback}>
+                <p  data-id={rec.Id}>{aadharBackName}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                label="Passport Front" required="true"  data-id={rec.Id}
+                onchange={passportFront}>
+            </lightning-input>
+            <template if:true={doc3}>
+                <p>{doc3name}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                label="Passport Back" required="true"  data-id={rec.Id}
+                onchange={passportBack}>
+            </lightning-input>
+            <template if:true={doc4}>
+                <p>{doc4name}</p>
+            </template>
+            </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Visa" required="true"  data-id={rec.Id}
+                    onchange={visaApp}>
+                </lightning-input>
+                <template if:true={doc5}>
+                    <p>{doc5name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="PAN" required="true"  data-id={rec.Id}
+                    onchange={panApp}>
+                </lightning-input>
+                <template if:true={doc6}>
+                    <p>{doc6name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Voter Id Front"   data-id={rec.Id}
+                    onchange={voterFront}>
+                </lightning-input>
+                <template if:true={doc7}>
+                    <p>{doc7name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                    label="Voter Id Back" onchange={voterBack}>
+                </lightning-input>
+                <template if:true={doc8}>
+                    <p>{doc8name}</p>
+                </template>
+                </div>
+                </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Driving License Front"  data-id={rec.Id}
+                    onchange={dlFront}></lightning-input>
+                <template if:true={doc9}>
+                    <p>{doc9name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Driving License Back"  data-id={rec.Id}
+                    onchange={dlBack}></lightning-input>
+                <template if:true={doc10}>
+                    <p>{doc10name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Student Bank Statement"  data-id={rec.Id}
+                    onchange={bankStatementApp}></lightning-input>
+                <template if:true={doc11}>
+                    <p>{doc11name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .jpg, .jpeg"
+                    label="Photo (Please Upload PNG , JPG , JPEG only)"   data-id={rec.Id}
+                    onchange={photoApp}></lightning-input>
+                <template if:true={doc12}>
+                    <p>{doc12name}</p>
+                </template>
+                </div>
+                </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Income Proof"  data-id={rec.Id}
+                    onchange={incomeApp}></lightning-input>
+                <template if:true={doc13}>
+                    <p>{doc13name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Other Document 1"  data-id={rec.Id}
+                    onchange={otherApp1}></lightning-input>
+                <template if:true={doc14}>
+                    <p>{doc14name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Other Document 2"  data-id={rec.Id}
+                    onchange={otherApp2}></lightning-input>
+                <template if:true={doc15}>
+                    <p>{doc15name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Other Document 3"  data-id={rec.Id}
+                    onchange={otherApp3}></lightning-input>
+                <template if:true={doc16}>
+                    <p>{doc16name}</p>
+                </template>
+                </div>
+            </div>
+            <div class="title-heading">Past Academics</div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="SSC"  data-id={rec.Id}
+                    onchange={sscApp}></lightning-input>
+                <template if:true={doc17}>
+                    <p>{doc17name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="HSC"  data-id={rec.Id}
+                    onchange={hscApp}></lightning-input>
+                <template if:true={doc18}>
+                    <p>{doc18name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Graduation"  data-id={rec.Id}
+                    onchange={graduationApp}></lightning-input>
+                <template if:true={doc19}>
+                    <p>{doc19name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Other Educational Document"  data-id={rec.Id}
+                    onchange={otherAppGradu}></lightning-input>
+                <template if:true={doc20}>
+                    <p>{doc20name}</p>
+                </template>
+                </div>
+            </div>
+            <div class="title-heading">Admission Documents</div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Language Test Score"  data-id={rec.Id}
+                    onchange={testScore}></lightning-input>
+                <template if:true={doc21}>
+                    <p>{doc21name}</p>
+                </template>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                    label="Analytical Test Score"  data-id={rec.Id}
+                    onchange={anaScore}></lightning-input>
+                <template if:true={doc22}>
+                    <p>{doc22name}</p>
+                </template>
+                </div>
+                </div>
+        </template>
+        <template if:true={Cotoggler}>
+            <div class="slds-grid slds-wrap">
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" variant="label-standard"
+                accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label="Aadhar Front" required="true"
+                onchange={aadharFront1} >
+            </lightning-input>
+            <template if:true={doc23}>
+                <p>{doc23name}</p>
+            </template>
+            </div>  
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" variant="label-standard"
+                accept=".png, .pdf, .jpg, .jpeg"
+                label=" Aadhar Back " required="true"  data-id={rec.Id}
+                onchange={back1} >
+            </lightning-input>
+            <template if:true={doc24}>
+                <p>{doc24name}</p>
+            </template>
+            </div>  
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                label=" Passport Front " required="true"  data-id={rec.Id}
+                onchange={pass1}>
+            </lightning-input>
+            <template if:true={doc25}>
+                <p>{doc25name}</p>
+            </template>
+            </div>  
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                label=" Passport Back " required="true"  data-id={rec.Id}
+                onchange={pass2}>
+            </lightning-input>
+            <template if:true={doc26}>
+                <p>{doc26name}</p>
+            </template>
+            </div>  
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                label=" Photo" required="true"  data-id={rec.Id}
+                onchange={photo1}>
+            </lightning-input>
+            <template if:true={doc27}>
+                <p>{doc27name}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                label=" PAN" required="true"  data-id={rec.Id}
+                onchange={pan1}>
+            </lightning-input>
+            <template if:true={doc28}>
+                <p>{doc28name}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label=" Voter Id Front " onchange={vid1}>
+            </lightning-input>
+            <template if:true={doc29}>
+                <p>{doc29name}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label=" Voter Id Back " onchange={vid2}>
+            </lightning-input>
+            <template if:true={doc30}>
+                <p>{doc30name}</p>
+            </template>
+            </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label=" 8 Month Bank Statement" onchange={bank8}>
+            </lightning-input>
+            <template if:true={doc31}>
+                <p>{doc31name}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label="Income Proof" onchange={income1}>
+            </lightning-input>
+            <template if:true={doc32}>
+                <p>{doc32name}</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label="Other Document 1" onchange={ot11}>
+            </lightning-input>
+            <template if:true={doc33}>
+                <p>doc33name</p>
+            </template>
+            </div>
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label="Other document 2" onchange={ot22}> 
+            </lightning-input>
+            <template if:true={doc34}>
+                <p  data-id={rec.Id}>{doc34name}</p>
+            </template>
+            </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"  data-id={rec.Id}
+                label="Other Document 3" onchange={ot33}>
+            </lightning-input>
+            <template if:true={doc35}>
+                <p>{doc35name}</p>
+            </template>
+            </div>
+              
+            </div>
+        </template>
+        </lightning-accordion-section>
+        </template>
+          
+        </lightning-accordion>
+
+    </div> -->
+</template>

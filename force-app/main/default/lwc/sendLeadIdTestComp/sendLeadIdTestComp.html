@@ -1,0 +1,18 @@
+<template>
+  <div class="slds-card">
+    Update Test
+      <p style="padding:5%;margin:2%">Lead Id: {leadId}</p>
+      <p style="padding:5%;margin:2%">Lead Name: {LeadName}</p>
+  </div>
+  
+    <lightning-card title="Update Lead">
+        <div class="slds-p-horizontal_medium">
+            <lightning-input label="First Name" name="First Name" value={firstName} onchange={handleFirstNameChange}></lightning-input>
+            <lightning-input label="Email" name="email" value={email} onchange={handleEmailChange}></lightning-input>
+        </div>
+        <div class="slds-m-top_medium slds-align_absolute-center">
+            <lightning-button label="Update" variant="brand" onclick={handleUpdate}></lightning-button>
+        </div>
+    </lightning-card>
+
+</template>

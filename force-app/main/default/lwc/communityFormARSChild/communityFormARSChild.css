@@ -1,0 +1,96 @@
+lightning-button.button {
+	--sds-c-button-brand-color-background: rgb(246,94,3);
+    --sds-c-button-text-color: #f4f7f9;
+}
+
+lightning-button.button:hover,
+lightning-button.button:active {
+    --sds-c-button-brand-color-background:rgb(246,94,3);
+}
+
+.slds-input{
+    border: none!important;
+    border-bottom: 1px solid gray;
+    border-radius: 0;
+}
+
+.custom-css {
+    --lwc-colorBackgroundPathComplete:#d88b10;
+    --lwc-colorBackgroundPathCompleteHover:#2623de;
+  }
+
+.fontcolor{
+  color: #d88b10;
+}
+
+.slds-is-open {
+    --slds-c-accordion-heading-text-color: rgb(246,94,3);
+  }
+
+  /* .exampleHolder{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+} */
+
+.my-custom-input{
+    --lwc-colorBorderInput: none;
+    border-bottom: 1px solid #DDDDDD;
+}
+/*
+.slds-form-element__label{
+  font-size: 1.75rem !important;
+}*/
+
+.custom-progress-bar{
+  background-color: green;
+}
+
+.exampleHolder{
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+    width: 55px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+
+  .title-sub-heading{
+    padding:6px;
+    background-color:#eee;
+    color: #0f0804; 
+    
+    }
+
+  .docs-codeblock-example {
+    overflow: auto !important;
+    transform: translate3d(0, 0, 0) !important;
+}
+/* styles for smaller screens */
+@media only screen and (max-width: 767px) {
+  tr td{
+     display: block;
+     width: 100%;
+     text-align: left;
+     padding: 4px 8px;
+ }
+}
+.myCss{
+  --slds-c-tabs-item-text-color-active:rgb(246,94,3);
+  --slds-c-tabs-item-color-border-hover:#4194f9;
+}
+.title-heading{
+  padding:10px;
+  background-color:#eee;
+  color: #f77121; 
+  font-weight: bold;
+  }
+  .title1{
+    --slds-c-accordion-heading-text-color: rgb(246,94,3);
+    --slds-c-accordion-summary-color-background:#eee;
+    }
+    .newclass{
+      margin-bottom: 50px;
+    }

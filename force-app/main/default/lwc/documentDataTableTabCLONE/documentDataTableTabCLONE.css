@@ -1,0 +1,27 @@
+.slds-modal__container {
+    max-width: 70rem !important;
+    width: 70% !important;
+}
+.legend-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    text-align: right;
+  }
+  
+  .legend-item {
+    display: inline-block;
+  width: 15px;
+  height: 15px;
+  /* margin-right: 5px; */
+  }
+  .align-right {
+    text-align: right;
+  }
+  .align-left {
+    text-align: left;
+  }
+
+  .align-left {
+    text-align: center;
+  }

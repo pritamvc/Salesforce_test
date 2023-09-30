@@ -1,0 +1,220 @@
+<!--
+  @description       : Reference Comp with make compulsory applicant and co-applicant one reference
+  @author            : Vaibhav
+  @group             : 
+  @last modified on  : 05-17-2023
+-->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSectionName} onsectiontoggle={handleSectionToggle} class="title1">
+        <template for:each={listOfReference} for:item="rec">
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                         key={rec.index} 
+                                         name={rec.Account__r.Name} 
+                                         label={rec.Account__r.Name}
+                                         >  
+                                                     
+                <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Reference First Name" 
+                                    name="Reference_First_Name__c"
+                                    value={rec.Reference_First_Name__c}  
+                                    type="text" 
+                                    data-id={rec.Account__c}
+                                    pattern="[A-Za-z ]{1,40}"
+                                    message-when-pattern-mismatch="Please enter a valid first name"
+                                    onchange={handlechange} 
+                                    required="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Reference Middle Name"  
+                                    name="Reference_Middle_Name__c"
+                                    type="text"
+                                    value={rec.Reference_Middle_Name__c} 
+                                    data-id={rec.Account__c}
+                                    pattern="[A-Za-z ]{1,40}"
+                                    message-when-pattern-mismatch="Please enter a valid middle name" 
+                                    onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Reference Last Name" 
+                                    name="Reference_Last_Name__c"
+                                    value={rec.Reference_Last_Name__c} 
+                                    type="text" 
+                                    data-id={rec.Account__c}
+                                    pattern="[A-Za-z ]{1,40}"
+                                    message-when-pattern-mismatch="Please enter a valid last name" 
+                                    onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Mobile Number" 
+                                        name="Mobile_No__c"
+                                        value={rec.Mobile_No__c} 
+                                        pattern="[0-9]{10}$"
+                                        message-when-pattern-mismatch="Mobile number must contains 10 digits only"
+                                        required="true" 
+                                        type="tel" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Email Id" 
+                                        name="Email_Id__c"
+                                        value={rec.Email_Id__c} 
+                                        type="email" 
+                                        data-id={rec.Account__c}
+                                        placeholder="username@example.com"
+                                        pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                        message-when-pattern-mismatch="Please enter a valid Email id"
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Landline Number" 
+                                        name="Landline_No__c"
+                                        value={rec.Landline_No__c} 
+                                        type="tel" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Occupation" 
+                                        name="Occupation__c"
+                                        value={rec.Occupation__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        pattern="[A-Za-z ]{1,40}"
+                                        message-when-pattern-mismatch="Please enter a valid occupation" 
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+            </div>
+            <div class="title-heading">Address Details</div>
+            <div class="slds-grid slds-wrap">                
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Address 1" 
+                                        name="Reference_Address_1__c"
+                                        value={rec.Reference_Address_1__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange} 
+                                        required="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Address 2" 
+                                        name="Reference_Address_2__c"
+                                        value={rec.Reference_Address_2__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Address 3" 
+                                        name="Reference_Address_3__c"
+                                        value={rec.Reference_Address_3__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-record-edit-form object-api-name="Reference__c">
+                        <lightning-input-field field-name="Pin_Code__c"
+                                        value={rec.Pin_Code__c} 
+                                        name="Pin_Code__c"
+                                        onchange={handleRefPincode} 
+                                        data-id={rec.Account__c}
+                                        required>
+                                </lightning-input-field>
+                    </lightning-record-edit-form>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="City" 
+                                     name="City__c"
+                                     value={rec.City__c} 
+                                     type="text" 
+                                     data-id={rec.Account__c}
+                                     onchange={handlechange} 
+                                     disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="District/Taluka" 
+                                        name="District__c"
+                                        value={rec.District__c} 
+                                        type="text"
+                                        data-id={rec.Account__c} 
+                                        onchange={handlechange} 
+                                        disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="State" 
+                                        name="State__c"
+                                        value={rec.State__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange} 
+                                        disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Country" 
+                                        name="Country__c"
+                                        value={rec.Country__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange} 
+                                        disabled="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input label="Landmark" 
+                                        name="Landmark__c"
+                                        value={rec.Landmark__c} 
+                                        type="text" 
+                                        data-id={rec.Account__c}
+                                        onchange={handlechange}>
+                    </lightning-input>
+                </div>
+            </div>
+            </lightning-accordion-section>  
+        </template>
+    </lightning-accordion>
+        <lightning-card>
+            <lightning-layout multiple-rows horizontal-align="center">
+                <lightning-layout-item>
+                    <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                        label="Save as draft" variant="brand" onclick={handleSaveReference}>
+                    </lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item size="auto">
+                    <div style="margin-left: 10px;">
+                        <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                            label="Submit" variant="brand" onclick={handleNextReference}>
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+
+                <!-- <lightning-layout-item size="auto">
+                    <div style="margin-left: 10px;">
+                        <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                            label="Save and Next" variant="brand" onclick={handleNextReference}>
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item> -->
+            </lightning-layout>
+        </lightning-card>
+</template>

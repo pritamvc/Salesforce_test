@@ -1,0 +1,6 @@
+<aura:component implements="lightning:isUrlAddressable">
+    <aura:attribute name="refRecordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <c:communityFormLeadSohail leadRecordId="{!v.refRecordId}"/>
+</aura:component>

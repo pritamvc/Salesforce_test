@@ -1,0 +1,19 @@
+<template>
+    <div class="slds-m-left_small">   
+    <template if:false={fileUploaded}>
+    <lightning-input type="file"
+                           name="fileUploader"
+                           accept={acceptedFormats}
+                           record-id={recordId}
+                           onchange={openfileUpload}>
+                           
+    </lightning-input>
+    <template if:true={docType}>
+    <lightning-input onchange={passwordChange} type = "text" label="Password" name="password" class="inp" value={myVar}></lightning-input> 
+    </template>       
+    </template>
+    <template if:true={fileUploaded}>
+        No Action Required    
+</template>
+</div>
+</template>

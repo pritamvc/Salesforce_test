@@ -1,0 +1,12 @@
+<apex:component controller="FieldSetTableController">
+    <apex:attribute name="recordId" type="Id" description="The record Id for querying the dynamic data" required="true"  />
+
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!dynamicData}" var="record">
+            <!-- Iterate over the field API names -->
+            <apex:repeat value="{!fieldAPINames}" var="fieldAPIName">
+                <apex:column value="{!record[fieldAPIName]}" />
+            </apex:repeat>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:component>

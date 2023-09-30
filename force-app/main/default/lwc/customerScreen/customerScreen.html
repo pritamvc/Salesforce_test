@@ -1,0 +1,43 @@
+<template>
+    <div style="background: #EFEFEF;">
+        <lightning-card>
+            <div>Applicant Id {applicantId}</div>
+            <div>Account Id {accountId}</div>
+            <div>Lead Id{leadId}</div>
+            <div>Deal Id {dealId}</div>
+            <div class="slds-p-horizontal_x-small">
+                <lightning-tabset active-tab-value={activeTab} selected-tab-id={activeTab}>
+                    <lightning-tab label="Basic Details" value=1 onactive={handleTabActive}>
+                        <template if:true={pausedInterviewId}>
+                            <lightning-flow flow-api-name={customerBasic} flow-input-variables={flowInputVariables} flow-interview-id={pausedInterviewId}
+                            ></lightning-flow>
+                        </template>
+                        <template if:false={pausedInterviewId}>
+                        <lightning-flow flow-api-name={customerBasic} flow-input-variables={flowInputVariables}>
+                        </lightning-flow></template>
+                    </lightning-tab>
+
+                    <lightning-tab label="Asset Details" value=2 onactive={handleTabActive}>
+                        <lightning-flow flow-api-name={customerAsset} flow-input-variables={flowInputVariables}>
+                        </lightning-flow>
+                    </lightning-tab>
+
+                    <lightning-tab label="Address Details" value=3 onactive={handleTabActive}>
+                        <lightning-flow flow-api-name={customerAddress} flow-input-variables={flowInputVariables}>
+                        </lightning-flow>
+                    </lightning-tab>
+
+                    <lightning-tab label="Collateral Details" value=4 onactive={handleTabActive}>
+                        <lightning-flow flow-api-name={customerCollateral} flow-input-variables={flowInputVariables}>
+                        </lightning-flow>
+                    </lightning-tab>
+
+                    <lightning-tab label="Bank Details" value=5 onactive={handleTabActive}>
+                        <lightning-flow flow-api-name={customerBank} flow-input-variables={flowInputVariables}>
+                        </lightning-flow>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </lightning-card>
+    </div>
+</template>

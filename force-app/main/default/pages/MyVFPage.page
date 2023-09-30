@@ -1,0 +1,16 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeLightning />
+
+    <div id="lwcContainer"></div>
+
+    <script>
+        $Lightning.use("c:applicantDataApp", function () {
+            $Lightning.createComponent("c:applicantDataLWC", {},
+                "lwcContainer",
+                function (cmp) {
+                    console.log("LWC component was created.");
+                }
+            );
+        });
+    </script>
+</apex:page>

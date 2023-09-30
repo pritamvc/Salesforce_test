@@ -1,0 +1,1362 @@
+<template>
+    <div style="background: #EFEFEF;">
+        <lightning-card style="color:rgb(103, 103, 224)">
+            <h1 style="color:rgb(246,94,3); font-size : large; text-align : center; font-weight: bold;">LOAN APPLICATION
+                FORM</h1>
+        </lightning-card>
+    </div>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <template if:true={isStepOne}>
+        <div style="background: #EFEFEF;">
+            <lightning-card>
+                <div class="slds-p-horizontal_x-small">
+                    <lightning-tabset active-tab-value="one" class="myCss">
+                        <lightning-tab label="Applicant Details" value="one">
+                            <div class={sectionClass}>
+                                <lightning-accordion allow-multiple-sections-open active-section-name="0"
+                                    class="title1">
+                                    <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                        name="0" label="KYC">
+                                        <div class={sectionClass}>
+                                            <div class="slds-grid slds-wrap">
+
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Aadhar Number" name="LAadharNumber"
+                                                        value={maskedAadharNumber} type="text" pattern="[0-9]{12}"
+                                                        variant="label-standard"
+                                                        message-when-pattern-mismatch="Please enter 12 digit Aadhar Number"
+                                                        onblur={handlechange} onchange={newChangeAadhar}
+                                                        field-level-help="Fill your 12 digit Aadhar Number"
+                                                        disabled={verifiedAadhar} required="true">
+                                                    </lightning-input>
+                                                    <lightning-button slot="input-group-button-left" class="input__icon"
+                                                        onclick={GetOtpAadhar} disabled={verifiedAadhar}
+                                                        label={buttonLabelAadhar}
+                                                        style={buttonStyleAadhar}></lightning-button>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input type="file" variant="label-standard"
+                                                        accept=".png, .pdf, .jpg, .jpeg" label=" Aadhar Front "
+                                                        required="true" onchange={openFrontfileUpload}>
+                                                    </lightning-input>
+                                                    <template if:true={fileDataFront}>
+                                                        <p>{fileDataFront.filenameFront}</p>
+                                                    </template>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input type="file" variant="label-standard"
+                                                        accept=".png, .pdf, .jpg, .jpeg" label=" Aadhar Back "
+                                                        required="true" onchange={openFrontfileUpload}>
+                                                    </lightning-input>
+                                                    <template if:true={fileDataFront}>
+                                                        <p>{fileDataFront.filenameFront}</p>
+                                                    </template>
+                                                </div>
+
+                                            </div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input type="text" label="PAN Number" name="PANNumber"
+                                                        value={PANNumber} pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+                                                        onchange={newChangePan}
+                                                        message-when-pattern-mismatch="Please valid PAN Number. Ex : ABCDE1234K"
+                                                        onblur={handlechange} disabled={verifiedPan}
+                                                        field-level-help="Fill your PAN Number (Ex: ABCDE1234K)"
+                                                        required="true">
+                                                    </lightning-input>
+                                                    <p>{matchText}</p>
+                                                    <lightning-button slot="input-group-button-left" class="input__icon"
+                                                        onclick={panVerification} label={buttonLabelPan}
+                                                        style={buttonStylePan}></lightning-button>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                        label=" PAN " required="true" onchange={openFrontfileUpload}>
+                                                    </lightning-input>
+                                                    <template if:true={fileDataFront}>
+                                                        <p>{fileDataFront.filenameFront}</p>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Passport File Number" name="passportNumber"
+                                                        value={passportNumber} required="true" type="text"
+                                                        message-when-pattern-mismatch="Please enter valid Passport Number"
+                                                        onblur={handlechange}
+                                                        field-level-help="Fill your Passport File Number Ex: MUMB21004239">
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Driving License"
+                                                        name="Driving_License_Number__c"
+                                                        value={Driving_License_Number__c} type="text"
+                                                        message-when-pattern-mismatch="Please valid Driving License Number. Ex : ABCDE1234K"
+                                                        onblur={handleCoAppliDriveLicDateOfExpiry}
+                                                        field-level-help="Fill your Driving License Number">
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Voter Id" name="voterId" value={voterId}
+                                                        type="text"
+                                                        message-when-pattern-mismatch="Please valid Voter Id"
+                                                        onblur={handlechange} field-level-help="Fill your Voter Id">
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                        name="1" label="Basic Details">
+                                        <div class="slds-grid slds-wrap">
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-combobox name={salutationLabel} label={salutationLabel}
+                                                    required="true" value={leadSalutation} options={salutationOptions}
+                                                    onchange={handlechange}>
+                                                </lightning-combobox>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="First Name" value={leadFirstName}
+                                                    name="firstName" type="text" pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="First Name should only contain lowercase or uppercase letters. e.g. John"
+                                                    required="true" onblur={handlechange}></lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Middle Name" name="middleName"
+                                                    value={leadMiddleName} pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="Middle Name should only contain lowercase or uppercase letters. e.g. John"
+                                                    type="text" onblur={handlechange}></lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Last Name" name="LastName1" value={leadLastName}
+                                                    pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="Last Name should only contain lowercase or uppercase letters. e.g. John"
+                                                    required="true" type="text" onblur={handlechange}></lightning-input>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-wrap">
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input type="date" label="Date of Birth" value={AppliDOB}
+                                                    name="Date of Birth" max={todaysDate} required="true"
+                                                    onchange={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input type="email" label="Email" value={leadEmail}
+                                                    name="Email" placeholder="username@example.com" disabled={verified}
+                                                    pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                                    message-when-pattern-mismatch="Please enter valid Email id"
+                                                    required="true" onblur={handlechange} onchange={newChange}>
+                                                </lightning-input>
+                                                <lightning-button slot="input-group-button-left" class="mybutt"
+                                                    label={buttonLabel} onclick={handleGetOTP} disabled={verified}
+                                                    style={buttonStyle}></lightning-button>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input type="tel" label="Mobile" name="Mobile"
+                                                    value={leadMobile} onblur={handlechange} required="true"
+                                                    pattern="[0-9]{10}$" disabled={verifiedMob} onchange={newChangeMob}
+                                                    message-when-pattern-mismatch="Mobile number must contains 10 digits only">
+                                                </lightning-input>
+                                                <lightning-button slot="input-group-button-left" class="input__icon"
+                                                    onclick={handleGetOTPMobile} disabled={verifiedMob}
+                                                    label={buttonLabelMob} style={buttonStyleMob}></lightning-button>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-combobox name={fieldLabel} label={fieldLabel} required="true"
+                                                    value={AppliGender} options={options} onchange={handlechange}>
+                                                </lightning-combobox>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-wrap">
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Father's First Name" name="FatherFirstName"
+                                                    value={AppliFatherFirstName} type="text" required="true"
+                                                    pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="First Name should only contain lowercase or uppercase letters. e.g. John"
+                                                    onblur={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Father's Middle Name" name="FatherMiddleName"
+                                                    value={AppliFatherMiddleName} type="text" pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="Middle Name should only contain lowercase or uppercase letters. e.g. Jimmy"
+                                                    onblur={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Father's Last Name" name="FatherLastName"
+                                                    value={AppliFatherLastName} type="text" pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="Last Name should only contain lowercase or uppercase letters. e.g. Doe"
+                                                    onblur={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-combobox name={isIncomeConsiderIsFinLabel}
+                                                    label={isIncomeConsiderIsFinLabel}
+                                                    value={AppliIsIncomeConsiderIsFin}
+                                                    options={isIncomeConsiderIsFinOptions} onchange={handlechange}
+                                                    required="true">
+                                                </lightning-combobox>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-wrap">
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Mother's First Name" name="MotherFirstName"
+                                                    value={AppliMotherFirstName} type="text" required="true"
+                                                    pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="First Name should only contain lowercase or uppercase letters. e.g. Emmie"
+                                                    onblur={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Mother's Middle Name" name="MotherMiddleName"
+                                                    value={AppliMotherMiddleName} type="text" pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="Middle Name should only contain lowercase or uppercase letters. e.g. John"
+                                                    onblur={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input label="Mother's Last Name" name="MotherLastName"
+                                                    value={AppliMotherLastName} type="text" pattern="[A-Za-z ]{1,40}"
+                                                    message-when-pattern-mismatch="Last Name should only contain lowercase or uppercase letters. e.g. Doe"
+                                                    onblur={handlechange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-wrap">
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-combobox name={maritalStatusLabel} label={maritalStatusLabel}
+                                                    required="true" value={AppliMaritlStatus}
+                                                    options={maritalStatusOptions} onchange={handleAppliSpouseShowHide}>
+                                                </lightning-combobox>
+                                            </div>
+                                            <template if:true={ShowFieldsAppliSpouse}>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Spouse's First Name" name="SpouseFirstName"
+                                                        value={AppliSpouseFirstName} type="text" required="true"
+                                                        pattern="[A-Za-z ]{1,40}"
+                                                        message-when-pattern-mismatch="First Name should only contain lowercase or uppercase letters. e.g. Emmie"
+                                                        onblur={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </template>
+                                            <template if:true={ShowFieldsAppliSpouse}>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Spouse's Middle Name"
+                                                        name="SpouseMiddleName" value={AppliSpouseMiddleName}
+                                                        type="text" pattern="[A-Za-z ]{1,40}"
+                                                        message-when-pattern-mismatch="Middle Name should only contain lowercase or uppercase letters. e.g. John"
+                                                        onblur={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </template>
+                                            <template if:true={ShowFieldsAppliSpouse}>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Spouse's Last Name" name="SpouseLastName"
+                                                        value={AppliSpouseLastName} type="text"
+                                                        pattern="[A-Za-z ]{1,40}"
+                                                        message-when-pattern-mismatch="Last Name should only contain lowercase or uppercase letters. e.g. Doe"
+                                                        onblur={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </lightning-accordion-section>
+
+                                    <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                        name="A" label="Current Address">
+                                        <div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-combobox name="appliCurrentAddProof"
+                                                        label="Address Proof" required="true"
+                                                        value={AppliCurrentAddProof} options={appliAddressProofOptions}
+                                                        onchange={handlechange}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Current Address" name="ApplicurrentAddress"
+                                                        value={AppliCurrentAddress} type="text" required="true"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-record-edit-form object-api-name="Lead"
+                                                        id="searchPincode">
+                                                        <lightning-input-field field-name="Pin_Code__c"
+                                                            value={AppliCurrentPincode} name="appliCurrentPincode"
+                                                            onchange={handlePincodeSelection} required>
+                                                        </lightning-input-field>
+                                                    </lightning-record-edit-form>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="City" name="appliCurrentCity"
+                                                        value={AppliCurrentCity} required="true" type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Taluka" name="appliCurrentTaluka"
+                                                        value={AppliCurrentTaluka} required="true" type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="District" name="appliCurrentDistrict"
+                                                        value={AppliCurrentDistrict} type="text" required="true"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Landmark" name="appliCurrentLandmark"
+                                                        value={AppliCurrentLandmark} type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="State" name="appliCurrentState"
+                                                        value={AppliCurrentState} required="true" type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Country" name="appliCurrentCountry"
+                                                        value={AppliCurrentCountry} type="text" required="true"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+
+                                    <lightning-accordion-section name="B"
+                                        class="slds-col slds-size_4-of-4 slds-p-around_small" label="Permanent Address">
+                                        <div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input style="font-weight: bold;" type="checkbox"
+                                                        name="Same as Current Address" label="Same as Current Address"
+                                                        onchange={handleAppliPermanentAddBox}
+                                                        checked={AppliPermanentSameAsCurrent}></lightning-input>
+                                                </div>
+                                                <!-- <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input style="font-weight: bold;" type="checkbox"
+                                                        name="IsCommunicationAddress" label="Is Communication Address?"
+                                                        onchange={handleIsCommAddress}
+                                                        required="true"></lightning-input>
+                                                </div> -->
+                                                <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small"
+                                                    style="font-weight: bold;">
+                                                    <lightning-radio-group name="IsCommunicationAddress"
+                                                        label="Is Communication Address?" options={IsCommAddressoptions}
+                                                        value={AppliPermIsCommAddressvalue} type="radio"
+                                                        onchange={handleIsCommAddress}>
+                                                    </lightning-radio-group>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-combobox name="appliPermanentAddressProof"
+                                                        label={appliAddressProofLabel} required="true"
+                                                        value={AppliPermanentAddProof}
+                                                        options={appliAddressProofOptions} onchange={handlechange}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Permanent Address" name="permanentAddress"
+                                                        value={AppliPermanentAddress} type="text" required="true"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-record-edit-form object-api-name="Lead"
+                                                        id="searchPincode1">
+                                                        <lightning-input-field field-name="Pin_Code__c"
+                                                            value={AppliPermanentPincode} name="appliPermanentPincode"
+                                                            onchange={handlePincodeSelection1} required>
+                                                        </lightning-input-field>
+                                                    </lightning-record-edit-form>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="City" name="appliPermanentCity"
+                                                        value={AppliPermanentCity} required="true" type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Taluka" name="appliPermanentTaluka"
+                                                        value={AppliPermanentTaluka} required="true" type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="District" name="appliPermanentDistrict"
+                                                        value={AppliPermanentDistrict} type="text" required="true"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Landmark" name="appliPermanentLandmark"
+                                                        value={AppliPermanentLandmark} type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="State" name="appliPermanentState"
+                                                        value={AppliPermanentState} required="true" type="text"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                    <lightning-input label="Country" name="appliPermanentCountry"
+                                                        value={AppliPermanentCountry} type="text" required="true"
+                                                        onchange={handlechange}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                                    <lightning-card>
+                                        <lightning-button class="button slds-align_absolute-center" label="Save"
+                                            variant="brand" onclick={handleSaveLead}></lightning-button>
+                                    </lightning-card>
+                                </lightning-accordion>
+                            </div>
+                        </lightning-tab>
+                        <lightning-tab label="Loan Requirement" onactive={handleClickSix}>
+                            <c-child-test sec-five={secFive} sec-six={secSix} sec-seven={secSeven} sec-eight={secEight}
+                                sec-nine={secNine}></c-child-test>
+                        </lightning-tab>
+                        <lightning-tab label="Course and Academics" value="two">
+                            <lightning-accordion allow-multiple-sections-open active-section-name="course"
+                                class="title1">
+                                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                    name="course" label="Course">
+                                    <div class="slds-grid slds-wrap">
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox name={CountryOfStudyLabel} label={CountryOfStudyLabel}
+                                                value={CountryOfStudyValue} options={CountryOfStudyFieldOptions}
+                                                required="true" onchange={handlechange}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox name={AdmissionStatusLabel} label={AdmissionStatusLabel}
+                                                value={AdmissionStatus} options={AdmissionStatusOptions} required="true"
+                                                onchange={handleCourseUniversityShowHide}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <template if:true={ShowFieldsCourseUniversity}>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-record-edit-form object-api-name="Lead"
+                                                    id="createUniversityName">
+                                                    <lightning-input-field label="University Name"
+                                                        field-name="University_Name__c" name="universityName"
+                                                        value={universityName} variant="label-standard"
+                                                        onchange={handleCourseInstAndCampusShowHide} required>
+                                                    </lightning-input-field>
+                                                </lightning-record-edit-form>
+                                            </div>
+                                        </template>
+                                        <!-- <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input type="text" name="universityName"
+                                                    label="University Name" required="true" value={universityName}
+                                                    onchange={handleCourseInstAndCampusShowHide}>
+                                                </lightning-input>
+                                            </div> -->
+
+                                        <template if:true={ShowFieldsCourseUniversity}>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-input type="text" name="Campus" label="Campus"
+                                                    value={courseCampus} onblur={handlechange} required="true">
+                                                </lightning-input>
+                                            </div>
+                                        </template>
+                                    </div>
+
+                                    <div class="slds-grid slds-wrap">
+                                        <template if:true={ShowFieldsCourseUniversity}>
+                                            <div
+                                                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                                <lightning-record-edit-form object-api-name="Lead"
+                                                    id="createContactForm">
+                                                    <lightning-input-field label="Institute Name"
+                                                        field-name="Institute_Name__c" name="Institute"
+                                                        value={InstituteId} variant="label-standard"
+                                                        onchange={handleInstituteSelection} required>
+                                                    </lightning-input-field>
+                                                </lightning-record-edit-form>
+                                            </div>
+                                        </template>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox name={CourseCategoryLabel} label={CourseCategoryLabel}
+                                                required="true" value={CourseCategoryValue}
+                                                options={CourseCategoryOptions} onchange={handlechange}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox name={CourseTypeLabel} label={CourseTypeLabel}
+                                                required="true" value={CourseTypeValue} options={CourseTypeOptions}
+                                                onchange={handlechange}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox name={CourseLevelLabel} label={CourseLevelLabel}
+                                                required="true" value={CourseLevelValue} options={CourseLevelOptions}
+                                                onchange={handlechange}></lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-wrap">
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox name={CourseStreamLabel} label={CourseStreamLabel}
+                                                required="true" value={CourseStreamValue} options={CourseStreamOptions}
+                                                onchange={handlechange}></lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-input type="text" label="Course Name" name="courseName"
+                                                value={courseName} onblur={handlechange} required="true">
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-input type="date" label="Course Start Date"
+                                                value={courseStartDate} format="MM/dd/yyyy" name="courseStartDate"
+                                                onblur={handlechange}>
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-input type="date" label="Course End Date" value={courseEndDate}
+                                                name="courseEndDate" onblur={handlechange}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="slds-grid slds-wrap">
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox variant="label-standard" label={LangScoreCategoryLabel}
+                                                name="Language Score Category" options={LangScoreCategoryOptions}
+                                                value={LangScoreCategoryValue} required="true" onchange={handlechange}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-input label="Language Test Score" name="langTestScore"
+                                                value={langTestScore} pattern="^(0|[1-9][0-9]*)$" required="true"
+                                                type="number" onblur={handlechange}>
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-combobox variant="label-standard"
+                                                label={AnalytScoreCategoryLabel} name="Analytics Score Category"
+                                                options={AnalytScoreCategoryOptions} value={AnalytScoreCategoryValue}
+                                                required="true" onchange={handlechange}>
+                                            </lightning-combobox>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                                            <lightning-input label="Analytical Test Score" name="analyticalTestScore"
+                                                value={analyticalTestScore} pattern="^(0|[1-9][0-9]*)$" required="true"
+                                                type="number" onblur={handlechange}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                    name="education" label="Education">
+                                    <div class="docs-codeblock-example">
+                                        <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                                            <tbody>
+
+                                                <template for:each={listOfEducationalTable} for:item="rec">
+
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard"
+                                                                label={EducationDetailsLabel} data-id={rec.index}
+                                                                name="Education_Qualification__c"
+                                                                options={EducationDetailsOptions}
+                                                                value={rec.Education_Qualification__c} required="true"
+                                                                onchange={handleAppliEduDetails}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Year Completed"
+                                                                name="Year_Completed__c" value={rec.Year_Completed__c}
+                                                                required="true" type="date" data-id={rec.index}
+                                                                onblur={handleAppliEduDetails}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Percentage/Marks/CGPA"
+                                                                name="Percentage_Marks_CGPA__c"
+                                                                value={rec.Percentage_Marks_CGPA__c} required="true"
+                                                                type="number" data-id={rec.index}
+                                                                onblur={handleAppliEduDetails}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="School/College/University"
+                                                                name="School_College_University__c"
+                                                                value={rec.School_College_University__c} required="true"
+                                                                type="text" data-id={rec.index}
+                                                                onblur={handleAppliEduDetails}>
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Add / Delete Buttons -->
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-icon icon-name="utility:add" size="small"
+                                                                title="Add Row" alternative-text="Add Row"
+                                                                onclick={addNewRowEducational}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                                            <lightning-icon icon-name="utility:delete" size="small"
+                                                                alternative-text="Remove" title="Remove"
+                                                                name={rec.index}
+                                                                onclick={removeTheRowEducational}></lightning-icon>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-card>
+                                    <lightning-button class="button slds-align_absolute-center" label="Save"
+                                        variant="brand" onclick={handleSaveLead}></lightning-button>
+                                </lightning-card>
+                            </lightning-accordion>
+                        </lightning-tab>
+                        <lightning-tab label="Co-Applicant/Guarantor" value="four">
+                            <div class={sectionClass}>
+                                <lightning-accordion allow-multiple-sections-open
+                                    active-section-name="Co-Applicant/Guarantor" class="title1">
+                                    <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small"
+                                        name="Co-Applicant/Guarantor" label="Co-Applicant/Guarantor">
+                                        <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                                            <tbody>
+
+                                                <template for:each={listOfAccounts} for:item="rec">
+
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard"
+                                                                label="Applicant Name" name="ApplicantCategory"
+                                                                value={AppliCategoryvalue}
+                                                                options={AppliCategoryOptions} required="true"
+                                                                onchange={handleApplicantCategory}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <!-- <lightning-combobox variant="label-standard"
+                                                                label="Applicant Name" name="ApplicantCategory"
+                                                                value={AppliCategoryvalue}
+                                                                options={AppliCategoryOptions} required="true"
+                                                                onchange={handleApplicantCategory}>
+                                                            </lightning-combobox> -->
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr key={rec}>
+
+                                                        <td>
+                                                            <lightning-input type="text" variant="label-standard"
+                                                                label="First Name" required="true" data-id={rec.index}
+                                                                name="LastName" value={rec.FirstName}
+                                                                pattern="[A-Za-z ]{1,40}"
+                                                                message-when-pattern-mismatch="First Name should only contain lowercase or uppercase letters. e.g. John"
+                                                                onblur={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input type="text" variant="label-standard"
+                                                                label="Middle Name" required="true" data-id={rec.index}
+                                                                name="LastName" value={rec.MiddleName}
+                                                                pattern="[A-Za-z ]{1,40}"
+                                                                message-when-pattern-mismatch="Middle Name should only contain lowercase or uppercase letters. e.g. Jimmy"
+                                                                onblur={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input type="text" variant="label-standard"
+                                                                label="Last Name" required="true" data-id={rec.index}
+                                                                name="LastName" value={rec.LastName}
+                                                                pattern="[A-Za-z ]{1,40}"
+                                                                message-when-pattern-mismatch="Last Name should only contain lowercase or uppercase letters. e.g. Doe"
+                                                                onblur={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input type="date" label="Date of Birth"
+                                                                variant="label-standard" value={rec.Date_of_Birth__pc}
+                                                                name="Date_of_Birth__pc" required="true"
+                                                                data-id={rec.index} max={todaysDate}
+                                                                onblur={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input type="tel" label="Mobile"
+                                                                name="Mobile_No__pc" value={rec.Mobile_No__pc}
+                                                                onblur={handlechange} required="true"
+                                                                pattern="[0-9]{10}$"
+                                                                message-when-pattern-mismatch="Mobile number must contains 10 digits only"
+                                                                variant="label-standard" data-id={rec.index}>
+                                                            </lightning-input>
+                                                        </td>
+
+                                                        <td>
+                                                            <lightning-input type="text" label="Email"
+                                                                value={rec.PersonEmail} name="PersonEmail"
+                                                                pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                                                message-when-pattern-mismatch="Please enter valid Email id"
+                                                                required="true" variant="label-standard"
+                                                                data-id={rec.index} onblur={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <!-- <lightning-input type="text" label="Email"
+                                                                value={rec.PersonEmail} name="PersonEmail"
+                                                                pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                                                message-when-pattern-mismatch="Please enter valid Email id"
+                                                                required="true" variant="label-standard"
+                                                                data-id={rec.index} onblur={handlechange}>
+                                                            </lightning-input> -->
+                                                        </td>
+                                                        <template if:true={ShowFieldsApplicantCategory}>
+                                                            <td>
+                                                                <lightning-input type="text" variant="label-standard"
+                                                                    label="Father/Spouse Name" data-id={rec.index}
+                                                                    name="Father_Spouse_Name__pc" required="true"
+                                                                    value={rec.Father_Spouse_Name__pc}
+                                                                    pattern="[A-Za-z ]{1,40}"
+                                                                    message-when-pattern-mismatch="Father/Spouse Name should only contain lowercase or uppercase letters. e.g. John Doe"
+                                                                    onblur={handlechange}>
+                                                                </lightning-input>
+                                                            </td>
+                                                            <td>
+                                                                <lightning-input type="text" variant="label-standard"
+                                                                    label="Mother's Name" data-id={rec.index}
+                                                                    name="Mother_Name__pc" value={rec.Mother_Name__pc}
+                                                                    required="true" pattern="[A-Za-z ]{1,40}"
+                                                                    message-when-pattern-mismatch="Mother's Name should only contain lowercase or uppercase letters. e.g. Emmie Doe"
+                                                                    onblur={handlechange}>
+                                                                </lightning-input>
+                                                            </td>
+                                                        </template>
+                                                    </tr>
+
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard" label="Gender"
+                                                                data-id={rec.index} name="Gender__c"
+                                                                value={rec.Gender__c} options={GenderPerAccOptions}
+                                                                required="true" onblur={handlechange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard"
+                                                                label="Marital Status" data-id={rec.index}
+                                                                name="Marital_Status__c" value={rec.Marital_Status__c}
+                                                                options={MaritalStatusPerAccOptions} required="true"
+                                                                onblur={handlechange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard"
+                                                                label="Relationship with Applicant" data-id={rec.index}
+                                                                name="Relationship with Applicant"
+                                                                options={RelshipWithAppliPerAccOptions}
+                                                                value={rec.Relationship_with_Applicant__c}
+                                                                required="true" onblur={handleRelationWithApplicant}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <template if:true={ShowFieldsRelationWithAppliIfOther}>
+                                                            <td>
+                                                                <lightning-input type="text" variant="label-standard"
+                                                                    label="Relationship with Applicant (If Others)"
+                                                                    data-id={rec.index}
+                                                                    name="Relationship_with_Applicant_If_Others__c"
+                                                                    value={rec.Relationship_with_Applicant_If_Others__c}
+                                                                    required="true" onblur={handlechange}>
+                                                                </lightning-input>
+                                                            </td>
+                                                        </template>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard"
+                                                                label="Relationship Proof" data-id={rec.index}
+                                                                name="Relationship_Proof__c"
+                                                                options={RelshipProofPerAccOptions}
+                                                                value={rec.Relationship_Proof__c} required="true"
+                                                                onblur={handlechange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-combobox variant="label-standard"
+                                                                label="Is Income Considered/Is Financial"
+                                                                required="true" data-id={rec.index}
+                                                                name="Is_Income_Considered_Is_Financial__c"
+                                                                value={rec.Is_Income_Considered_Is_Financial__c}
+                                                                options={isIncomeConsiderIsFinOptions}
+                                                                onblur={handlechange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <!-- <lightning-combobox variant="label-standard"
+                                                                label="Is Income Considered/Is Financial"
+                                                                required="true" data-id={rec.index}
+                                                                name="Is_Income_Considered_Is_Financial__c"
+                                                                value={rec.Is_Income_Considered_Is_Financial__c}
+                                                                options={isIncomeConsiderIsFinOptions}
+                                                                onblur={handlechange}>
+                                                            </lightning-combobox> -->
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Currentaddress -->
+                                                    <tr key={rec}>
+                                                        <td colspan="4">
+                                                            <div class="title-heading">Current Address Details</div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-combobox name="Address_Proof__c"
+                                                                label="Address Proof" data-id={rec.index}
+                                                                required="true" value={rec.Address_Proof__c}
+                                                                options={AddProofCurrentPerAccOptions}
+                                                                onchange={handlechange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Current Address"
+                                                                name="Current_Address__pc"
+                                                                value={rec.Current_Address__pc} type="text"
+                                                                required="true" data-id={rec.index}
+                                                                onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="City" name="City__pc"
+                                                                data-id={rec.index} value={rec.City__pc} required="true"
+                                                                type="text" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Taluka" name="Taluka__pc"
+                                                                value={rec.Taluka__pc} required="true" type="text"
+                                                                data-id={rec.index} onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input label="District" name="District__pc"
+                                                                data-id={rec.index} value={rec.District__pc} type="text"
+                                                                required="true" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Pin Code" name="Pin_Code__pc"
+                  pattern="^[1-9][0-9]{5}$" data-id={rec.index}
+                  message-when-pattern-mismatch="Please enter 6 digit pincode"
+                  value={rec.Pin_Code__pc} type="text" required="true"
+                  onchange={handlechange}>
+</lightning-input>
+
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Landmark" name="Landmark__pc"
+                                                                data-id={rec.index} value={rec.Landmark__pc} type="text"
+                                                                onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="State" name="State__pc"
+                                                                value={rec.State__pc} data-id={rec.index}
+                                                                required="true" type="text" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input label="Country" name="Country__pc"
+                                                                value={rec.Country__pc} data-id={rec.index} type="text"
+                                                                required="true" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Years In Address"
+                                                                name="Years In Address" value='' data-id={rec.index}
+                                                                type="number" required="true" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <!-- <lightning-input label="Years In Address"
+                                                                name="Years In Address" value='' data-id={rec.index}
+                                                                type="number" required="true" onchange={handlechange}>
+                                                            </lightning-input> -->
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Permanent Address Details -->
+                                                    <tr key={rec}>
+                                                        <td colspan="4">
+                                                            <div class="title-heading">Permanent Address Details</div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input style="font-weight: bold;"
+                                                                data-id={rec.index} type="checkbox"
+                                                                name="Same as Current Address"
+                                                                label="Same as Current Address"
+                                                                onchange={handlechange}></lightning-input>
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-combobox name="Address_Proof__c"
+                                                                label="Address Proof" data-id={rec.index}
+                                                                required="true" value={rec.Address_Proof__c}
+                                                                options={AddProofPermantPerAccOptions}
+                                                                onchange={handlechange}>
+                                                            </lightning-combobox>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Current Address"
+                                                                name="Permanent_Address__pc"
+                                                                value={rec.Permanent_Address__pc} type="text"
+                                                                data-id={rec.index} required="true"
+                                                                onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="City" name="City_Permanent__pc"
+                                                                value={rec.City_Permanent__pc} data-id={rec.index}
+                                                                required="true" type="text" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Taluka" name="Taluka_Permanent__pc"
+                                                                value={rec.Taluka_Permanent__pc} data-id={rec.index}
+                                                                required="true" type="text" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input label="District"
+                                                                name="District_Permanent__pc"
+                                                                value={rec.District_Permanent__pc} type="text"
+                                                                data-id={rec.index} required="true"
+                                                                onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Pin Code"
+                                                                name="Pin_Code_Permanent__pc" pattern="^[1-9][0-9]{5}$"
+                                                                message-when-pattern-mismatch="Please enter 6 digit pincode"
+                                                                value={rec.Pin_Code_Permanent__pc} type="text"
+                                                                data-id={rec.index} required="true"
+                                                                onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Landmark"
+                                                                name="Landmark_Permanent__pc"
+                                                                value={rec.Landmark_Permanent__pc} type="text"
+                                                                data-id={rec.index} onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="State" name="State_Permanent__pc"
+                                                                value={rec.State_Permanent__pc} required="true"
+                                                                data-id={rec.index} type="text" onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input label="Country"
+                                                                name="Country_Permanent__pc"
+                                                                value={rec.Country_Permanent__pc} type="text"
+                                                                data-id={rec.index} required="true"
+                                                                onchange={handlechange}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <!-- <lightning-input label="Country"
+                                                                name="Country_Permanent__pc"
+                                                                value={rec.Country_Permanent__pc} type="text"
+                                                                data-id={rec.index} required="true"
+                                                                onchange={handlechange}>
+                                                            </lightning-input> -->
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td colspan="4">
+                                                            <div class="title-heading">KYC</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input label="Aadhar Number" name="LAadharNumber"
+                                                                value={rec.LAadharNumber} type="text"
+                                                                pattern="[0-9]{12}" variant="label-standard"
+                                                                data-id={rec.index}
+                                                                message-when-pattern-mismatch="Please enter 12 digit Aadhar Number"
+                                                                onblur={handlechange} onchange={newChangeAadhar}
+                                                                field-level-help="Fill your 12 digit Aadhar Number"
+                                                                required="true">
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input type="file" variant="label-standard"
+                                                                accept=".png, .pdf, .jpg, .jpeg" data-id={rec.index}
+                                                                label=" Aadhar Front " required="true"
+                                                                onchange={openFrontfileUpload}>
+                                                            </lightning-input>
+                                                            <template if:true={fileDataFront}>
+                                                                <p>{fileDataFront.filenameFront}</p>
+                                                            </template>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input type="file" variant="label-standard"
+                                                                accept=".png, .pdf, .jpg, .jpeg" data-id={rec.index}
+                                                                label=" Aadhar Back " required="true"
+                                                                onchange={openFrontfileUpload}>
+                                                            </lightning-input>
+                                                            <template if:true={fileDataFront}>
+                                                                <p>{fileDataFront.filenameFront}</p>
+                                                            </template>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input type="text" label="PAN Number"
+                                                                name="PANNumber" value={rec.PANNumber}
+                                                                pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+                                                                onchange={newChangePan}
+                                                                message-when-pattern-mismatch="Please valid PAN Number. Ex : ABCDE1234K"
+                                                                onblur={handlechange} data-id={rec.index}
+                                                                field-level-help="Fill your PAN Number (Ex: ABCDE1234K)"
+                                                                required="true">
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input type="file"
+                                                                accept=".png, .pdf, .jpg, .jpeg" label=" PAN Front "
+                                                                required="true" data-id={rec.index}
+                                                                onchange={openFrontfileUpload}>
+                                                            </lightning-input>
+                                                            <template if:true={fileDataFront}>
+                                                                <p>{fileDataFront.filenameFront}</p>
+                                                            </template>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-input label="Passport File Number"
+                                                                data-id={rec.index} name="Passport_Number__pc"
+                                                                value={rec.Passport_Number__pc} required="true"
+                                                                type="text"
+                                                                message-when-pattern-mismatch="Please enter valid Passport Number"
+                                                                onblur={handlechange}
+                                                                field-level-help="Fill your Passport File Number Ex: MUMB21004239">
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td>
+                                                            <lightning-input label="Driving License"
+                                                                name="Driving_License_Number__c" data-id={rec.index}
+                                                                value={rec.Driving_License_Number__c} type="text"
+                                                                message-when-pattern-mismatch="Please valid Driving License Number. Ex : ABCDE1234K"
+                                                                onblur={handleCoAppliDriveLicDateOfExpiry}
+                                                                field-level-help="Fill your Driving License Number">
+                                                            </lightning-input>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Add / Delete Buttons -->
+                                                    <tr key={rec}>
+                                                        <td>
+                                                            <lightning-icon icon-name="utility:add" size="small"
+                                                                title="Add Row" alternative-text="Add Row"
+                                                                onclick={addNewRow}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                                            <lightning-icon icon-name="utility:delete" size="small"
+                                                                alternative-text="Remove" title="Remove"
+                                                                name={rec.index}
+                                                                onclick={removeTheRow}></lightning-icon>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </lightning-accordion-section>
+                                </lightning-accordion>
+                            </div>
+
+                        </lightning-tab>
+                        <lightning-tab label="Employment " onactive={handleClickFive}>
+                            <c-child-test sec-five={secFive} sec-six={secSix} sec-seven={secSeven} sec-eight={secEight}
+                                sec-nine={secNine}></c-child-test>
+                        </lightning-tab>
+                        <lightning-tab label="Financial " onactive={handleClickSeven}>
+                            <c-child-test sec-five={secFive} sec-six={secSix} sec-seven={secSeven} sec-eight={secEight}
+                                sec-nine={secNine}></c-child-test>
+                        </lightning-tab>
+                        <lightning-tab label="Collateral " onactive={handleClickEight}>
+                            <c-child-test sec-five={secFive} sec-six={secSix} sec-seven={secSeven} sec-eight={secEight}
+                                sec-nine={secNine}></c-child-test>
+                        </lightning-tab>
+                        <lightning-tab label="Reference " onactive={handleClickNine}>
+                            <c-child-test sec-five={secFive} sec-six={secSix} sec-seven={secSeven} sec-eight={secEight}
+                                sec-nine={secNine}></c-child-test>
+                        </lightning-tab>
+                        <lightning-tab label="Document Upload " onactive={handleClickTen}>
+                            <c-child-test sec-ten={secTen}></c-child-test>
+                        </lightning-tab>
+                        <lightning-tab label="Terms and Condition" onactive={handleClickEleven}>
+                            <h3 class="tnc">
+                               <br/> 1) I/We declare to have read the Application Form and confirm having received
+                                comprehensive information about the educational loans/scheme, fees, charges, cost etc.,
+                                payable in relation to the educational loans and I/We am/are aware of all the terms and
+                                conditions for receiving the educational loan from Auxilo Finserve Private Limited. I/We
+                                are also aware that the fees paid by me/us for availing an educational loan is
+                                non-refundable, even in the case of rejection/withdrawal of the loan application. <br/><br/> 2)
+                                I/We have understood the terms and conditions and agree to abide by the same even in case
+                                of rejections/withdrawals of Education loan application. <br/><br/> 3) I/We hereby declare to have
+                                provided true, correct and complete information in this loan application form and any
+                                other information/documents submitted by us and agree to indemnify Auxilo Finserve
+                                Private Limited for any losses or damages that may arise on account of any misstatement,
+                                misrepresentation or negligence In providing the information therein. <br/><br/> 4) I/we declare
+                                no other education loan/ financial assistance for further studies of the applicant has
+                                been availed from any other bank or institution, other than as expressly stated
+                                otherwise in the Application Form. <br/><br/> 5) I/we authorize Auxilo Finserve Private Limited,
+                                its associated companies, agents, agencies, partners, education institute, credit
+                                reporting agencies and any other entities to share the information contained in
+                                thisApplication Form and authorize them to verify any information in the Application
+                                Form including but not limited to enrolment, residence, employment, telephone, mobile
+                                verification, CIBIL or credit repayment history checks, documents verification,
+                                references check etc. <br/><br/> 6) I/we understand and acknowledge that Auxilo would not be able
+                                to process our loan application until all information as per Auxilo Observe Private
+                                Limited's credit and underwriting norms is provided by us and OH all verifications and
+                                check are completed. Further we agree and undertake to fully co-operate with the Company
+                                or it's officers, or its agents in complying with the same. <br/><br/> 7) I/We understand and
+                                acknowledge that Auxilo shall have absolute discretion to reject my/our application and
+                                Auxilo shall not be responsible /liable in any matter whatsoever to us for any rejection
+                                or any delay in notifying us of such rejection including any costs, losses, damages or
+                                any expenses or consequences caused by such rejection of my/our application.<br/><br/> 8) I
+                                understand that various factors bear an impact on the risk profile of the Customer. The
+                                rate of interest shall therefore vary from customer to customer depending upon the
+                                profile of the Customer.<br/><br/> 9) It is the responsibility of the applicant to register under
+                                CGST Act 2017, SGST Art 2017, IGST Act 2017, and UTGST Act 2017 (herein after
+                                individually/collectively called as "GST Law" as applicable to him and disclose to
+                                Auxilo Finserve Private Ltd (Auxilo) the registration number/s. In case violation of any
+                                provisions of taxation laws including GST Laws by the applicant, then applicant
+                                undertakes to indemnify Auxilo for any loss or claim or demand or penalty, if any, which
+                                may be incurred or suffered by Auxilo. <br/><br/> 10) I/We declare that my/our current address
+                                would be considered for the purpose of computation of GST if I/we am/are not registered
+                                under GST Act. I/We declare that my/our current address registered under GST would be
+                                considered for the purpose of computation of GST if I/we am/are registered under GST
+                                Act. I/We hereby declare to intimate Auxilo Finserve Private Limited immediately upon
+                                any change in my/our address contact details for communication. I/We give my/our consent
+                                to receive any promotional material / scheme of Auxilo Finserve Private Ltd and its
+                                associates, partners & affiliates. <br/><br/>
+                               <b> Note: </b>The Company's norms, does not permit acceptance of cash for any of the loan
+                                transactions. the company prefers all the loan related payments to be made from the
+                                applicant or co-applicants bank account through any banking means such as
+                                Cheque/DD/NEFT/RTGS/IMPs. Customer shall be solely responsible for Cash Transactions, if
+                                any, carried out with the Company's representatives or associates. If the applicant is a
+                                minor or resides outside India and the co-applicant is the resident Indian, the address
+                                of the co-applicant will be considered as address on record  for the purpose of determining
+                                place of supply under GST.
+                            </h3>
+                            <lightning-card>
+                                <lightning-input class=" slds-align_absolute-center" 
+                                type="checkbox"
+                                required
+                                label="I Agree "
+                                checked={isCheckedtnc}
+                                onchange={handleCheckboxChangetnc}
+                                style="text-align: center"
+                                >
+                            </lightning-input>
+                            <br>
+                                <lightning-button class="button slds-align_absolute-center" label="Submit"
+                                    variant="brand" onclick={handleFinalSubmit} ></lightning-button>
+                            </lightning-card>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div>
+            </lightning-card>
+        </div>
+    </template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1"
+            style="width: 400px; height: 140%; padding: 10px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Email Verification</h2>
+                </header>
+                <div class="slds-modal__content">
+                    <lightning-input style="padding: 15px" type="text" onchange={handleOtpValueChange} label="Enter OTP"
+                        value={otpValue} name="otp" required="true"></lightning-input>
+                    <p class="errormsg">{errormsg}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick={handleVerify}>Verify</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={showModalMobile}>
+        <section
+            style="width: 400px; height: 140%; padding: 10px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+            role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModalMobile}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Mobile Verification</h2>
+                </header>
+                <div class="slds-modal__content">
+                    <lightning-input style="padding: 15px" type="text" label="Enter OTP" onchange={handleOtpforMob}
+                        value={otpValueMob} name="otp" required="true"></lightning-input>
+                    <p class="errormsg">{errormsg}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick={handleVerifyMob}>Verify</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={showModalAadhar}>
+        <section
+            style="width: 400px; height: 140%; padding: 10px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+            role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModalAadhar}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Aadhar Verification</h2>
+                </header>
+                <div class="slds-modal__content">
+                    <lightning-input style="padding: 15px" type="text" label="Enter OTP" onchange={handleAadharOtp}
+                        value={otpValueAadhar} name="otp" required="true"></lightning-input>
+                    <p class="errormsg">{errormsg}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button disabled={verifiedbuttonAadhar} class="slds-button slds-button_brand"
+                        onclick={handleVerifyAadhar}>Verify</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

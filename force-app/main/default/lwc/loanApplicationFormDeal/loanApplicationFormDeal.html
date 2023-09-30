@@ -1,0 +1,160 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 06-12-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>   
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+            <div>Sales Manager: {LeadOwnerName}</div>
+            <div>Mobile: {LeadOwnerMobile}</div>
+        </div>
+
+        <div
+            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--2-of-4 slds-p-around_small">
+            <lightning-card style="color:rgb(103, 103, 224)">
+                <h1 style="color:rgb(246,94,3); font-size : large; font-weight: bold; text-align: center;">
+                    LOAN APPLICATION FORM
+                </h1>
+            </lightning-card>
+        </div>
+        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">            
+        </div>
+
+    </div>
+
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <div style="background: #EFEFEF;">
+        <lightning-card>
+            <div class="slds-p-horizontal_x-small">
+                <lightning-tabset active-tab-value={activeChild} selected-tab-id={activeChild}>
+                    <lightning-tab label="Applicant Details" value=1 onactive={getCoAppMobEmailWithHandleActive}>
+                        <c-lead-deal-applicant-details percentage-all={percentageAll} lead-record-id={recordId}
+                            object-api-name={objectApiName} financial-co-applicant-email={financialCoApplicantEmail}
+                            financial-co-applicant-mobile={financialCoApplicantMobile} onnext={handleNext}></c-lead-deal-applicant-details>
+                    </lightning-tab>
+                   
+                    <lightning-tab label="Loan Requirements" title="2nd tab extended title" value=2 onactive={handleTabActivated}>
+                        <c-lead-deal-loan-details percentage-all={percentageAll} lead-record-id={recordId}
+                            object-api-name={objectApiName} onnext={handleNext}></c-lead-deal-loan-details>
+                    </lightning-tab>
+
+                    <lightning-tab label="Course and Academics"  value=3 onactive={getTabPassportNoFunc}>
+                        <c-lead-deal-course-and-academics lead-record-id={recordId} object-api-name={objectApiName}
+                            get-course-data={getCourseData} onnext={handleNext}></c-lead-deal-course-and-academics>
+                    </lightning-tab> 
+                    <lightning-tab label="Co-Applicant/Guarantor" value=4 onactive={getTabPassportNoFunc}>
+                        <c-lead-deal-co-applicant-guarantor lead-record-id={recordId}
+                            object-api-name={objectApiName} get-applicant-mobile={getApplicantMobile} get-applicant-email={getApplicantEmail} 
+                            onnext={handleNext} ></c-lead-deal-co-applicant-guarantor>
+                    </lightning-tab>
+                     <lightning-tab label="Employment & Business" value=5 onactive={handleTabActivated}>
+                        <c-lead-deal-employment-details lead-record-id={recordId}
+                            object-api-name={objectApiName} onnext={handleNext} ></c-lead-deal-employment-details>
+                    </lightning-tab>
+                    <lightning-tab label="Financial" value=6 onactive={handleTabActivated}>
+                        <c-lead-deal-financial lead-record-id={recordId}
+                            object-api-name={objectApiName} onnext={handleNext}></c-lead-deal-financial>
+                    </lightning-tab>
+                    <lightning-tab label="Collateral" value=7 onactive={handleTabActivated}>
+                        <c-lead-deal-collateral lead-record-id={recordId}
+                            object-api-name={objectApiName} onnext={handleNext}></c-lead-deal-collateral>
+                    </lightning-tab> 
+               
+                     <lightning-tab label="Reference" value=8 onactive={handleTabActivated}>
+                        <c-lead-deal-references lead-record-id={recordId}
+                            object-api-name={objectApiName} onnext={handleNext}></c-lead-deal-references>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </lightning-card>
+    </div>
+    <template if:true={tncModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" style="width:100%">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModaltnc}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate" style="margin-top: 2px;">Terms and condition
+                    </h2>
+                </header>
+                <div class="slds-modal__content">
+                    <h3 class="tnc">
+                        <br /> 1) I/We declare to have read the Application Form and confirm having received
+                        comprehensive information about the educational loans/scheme, fees, charges, cost etc.,
+                        payable in relation to the educational loans and I/We am/are aware of all the terms and
+                        conditions for receiving the educational loan from Auxilo Finserve Private Limited. I/We
+                        are also aware that the fees paid by me/us for availing an educational loan is
+                        non-refundable, even in the case of rejection/withdrawal of the loan application. <br /><br />
+                        2)
+                        I/We have understood the terms and conditions and agree to abide by the same even in case
+                        of rejections/withdrawals of Education loan application. <br /><br /> 3) I/We hereby declare to
+                        have
+                        provided true, correct and complete information in this loan application form and any
+                        other information/documents submitted by us and agree to indemnify Auxilo Finserve
+                        Private Limited for any losses or damages that may arise on account of any misstatement,
+                        misrepresentation or negligence In providing the information therein. <br /><br /> 4) I/we
+                        declare
+                        no other education loan/ financial assistance for further studies of the applicant has
+                        been availed from any other bank or institution, other than as expressly stated
+                        otherwise in the Application Form. <br /><br /> 5) I/we authorize Auxilo Finserve Private
+                        Limited,
+                        its associated companies, agents, agencies, partners, education institute, credit
+                        reporting agencies and any other entities to share the information contained in
+                        thisApplication Form and authorize them to verify any information in the Application
+                        Form including but not limited to enrolment, residence, employment, telephone, mobile
+                        verification, CIBIL or credit repayment history checks, documents verification,
+                        references check etc. <br /><br /> 6) I/we understand and acknowledge that Auxilo would not be
+                        able
+                        to process our loan application until all information as per Auxilo Observe Private
+                        Limited's credit and underwriting norms is provided by us and OH all verifications and
+                        check are completed. Further we agree and undertake to fully co-operate with the Company
+                        or it's officers, or its agents in complying with the same. <br /><br /> 7) I/We understand and
+                        acknowledge that Auxilo shall have absolute discretion to reject my/our application and
+                        Auxilo shall not be responsible /liable in any matter whatsoever to us for any rejection
+                        or any delay in notifying us of such rejection including any costs, losses, damages or
+                        any expenses or consequences caused by such rejection of my/our application.<br /><br /> 8) I
+                        understand that various factors bear an impact on the risk profile of the Customer. The
+                        rate of interest shall therefore vary from customer to customer depending upon the
+                        profile of the Customer.<br /><br /> 9) It is the responsibility of the applicant to register
+                        under
+                        CGST Act 2017, SGST Art 2017, IGST Act 2017, and UTGST Act 2017 (herein after
+                        individually/collectively called as "GST Law" as applicable to him and disclose to
+                        Auxilo Finserve Private Ltd (Auxilo) the registration number/s. In case violation of any
+                        provisions of taxation laws including GST Laws by the applicant, then applicant
+                        undertakes to indemnify Auxilo for any loss or claim or demand or penalty, if any, which
+                        may be incurred or suffered by Auxilo. <br /><br /> 10) I/We declare that my/our current address
+                        would be considered for the purpose of computation of GST if I/we am/are not registered
+                        under GST Act. I/We declare that my/our current address registered under GST would be
+                        considered for the purpose of computation of GST if I/we am/are registered under GST
+                        Act. I/We hereby declare to intimate Auxilo Finserve Private Limited immediately upon
+                        any change in my/our address contact details for communication. I/We give my/our consent
+                        to receive any promotional material / scheme of Auxilo Finserve Private Ltd and its
+                        associates, partners & affiliates. <br /><br />
+                        <b> Note: </b>The Company's norms, does not permit acceptance of cash for any of the loan
+                        transactions. the company prefers all the loan related payments to be made from the
+                        applicant or co-applicants bank account through any banking means such as
+                        Cheque/DD/NEFT/RTGS/IMPs. Customer shall be solely responsible for Cash Transactions, if
+                        any, carried out with the Company's representatives or associates. If the applicant is a
+                        minor or resides outside India and the co-applicant is the resident Indian, the address
+                        of the co-applicant will be considered as address on record for the purpose of determining
+                        place of supply under GST.
+                    </h3>
+                </div>
+                <footer class="slds-modal__footer">
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

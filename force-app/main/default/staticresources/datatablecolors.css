@@ -1,0 +1,11 @@
+.datatble-orange{
+	color:#000000;
+	background-color:#FFA500;
+}
+.datatble-Yellow{
+	color:#000000;
+	background-color:#FFDB58;
+}
+.datatble-blue{
+	color:#000000;
+	background-color:#ADD8E6;

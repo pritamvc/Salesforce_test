@@ -1,0 +1,93 @@
+<!-- <template>
+    <lightning-accordion allow-multiple-sections-open active-section-name="course" class="title1">
+        <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="course" label="Course">
+
+            <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName}>
+                <lightning-input-field field-name={countryOfStudyField} onchange={handleInputChange}></lightning-input-field>
+                <lightning-input-field field-name={admissonStatusField} onchange={handleInputChange}></lightning-input-field>
+                <lightning-input-field field-name='University_Name__c' onchange={handleInputChange}></lightning-input-field>
+                <lightning-input-field field-name={instituteNameField} onchange={handleInputChange}></lightning-input-field>
+            </lightning-record-edit-form>
+
+
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template> -->
+
+<template>
+    <lightning-record-edit-form object-api-name="Lead" record-id={recordId}>
+        <lightning-input-field field-name="Country_of_Study__c" name="Country_of_Study__c" value="INDIA" onchange={handleInputChange}></lightning-input-field>
+        <lightning-input-field field-name='University_Name__c' name="University_Name__c" value="a0KBi000001wWWuMAM" onchange={handleInputChange}></lightning-input-field>
+        <lightning-input-field field-name="Admission_Status__c" onchange={handleInputChange}></lightning-input-field>
+        <lightning-input-field field-name="Institute_Name__c" name="Institute_Name__c" value={instituteName} onchange={handleInputChange}></lightning-input-field>
+    </lightning-record-edit-form>
+</template>
+<!-- <template>
+    <div class="slds-box slds-theme_default">
+        <div class="slds-box__header slds-theme_default">
+            <h2 class="slds-text-heading_small">Edit Lead</h2>
+        </div>
+        <div class="slds-box__body">
+            <lightning-record-edit-form record-id={leadId} object-api-name="Lead" onsuccess={handleSuccess}>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="FirstName"></lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name="LastName"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Company"></lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Title"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Phone"></lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Email"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="LeadSource"></lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Status"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Industry"></lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Rating"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Website"></lightning-input-field>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input-field field-name="NumberOfEmployees"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input-field field-name="Street"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-box__footer">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button label="Save" type="submit"></lightning-button>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </div>
+</template> -->
