@@ -1,0 +1,1248 @@
+<!--
+  @description       : 
+  @author            : Tushar Chopade
+  @last modified on  : 03-10-2023
+  @last modified by  : Tushar Chopade
+-->
+<template>
+    <template if:true={secFive}>
+        <div class={sectionClass}>
+           
+                <lightning-accordion allow-multiple-sections-open active-section-name="Employment" class="title1">
+                    <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="Employment" label="Employment">
+                        <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                            <tbody>
+        
+                                <!-- EMPLOYMENT DETAILS -->
+                                <template for:each={listOfEmploymentTable} for:item="rec">
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-combobox name="applicantNamesEmployment" label="Applicant Name"
+                                                value={value} options={TypeOptions} onchange={handleTypeChange}>
+                                            </lightning-combobox>
+                                            <!-- <lightning-combobox variant="label-standard" name={fieldLabel} label={fieldLabel} value={value} placeholder={fieldLabel} options={AppliWithLeadNameoptions} 
+                                                    onchange={handleChange}>
+                                                </lightning-combobox> -->
+        
+        
+                                            <!-- <lightning-combobox 
+                                                    name="Applicant Name" 
+                                                    variant="label-standard" label="Applicant Name" 
+                                                    placeholder="Select Applicant Name" 
+                                                    value={value} onblur={handleApplicantsWithLead} 
+                                                    options={Options}>
+                                                </lightning-combobox> -->
+                                        </td>
+                                    </tr>
+        
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-combobox variant="label-standard" label="Employment Type"
+                                                data-id={rec.index} name="Employment_Type__c"
+                                                options={EmploymentTypePerAccOptions} value={rec.Employment_Type__c}
+                                                required="true" onchange={handleEmploymentTypeSelect}>
+                                            </lightning-combobox>
+                                        </td>
+                                        <template if:true={ShowFieldsEmpTypeSalaried}>
+                                            <td>
+                                                <lightning-input label="Name of the Company" name="Name_Of_The_Company__pc"
+                                                    value={rec.Name_Of_The_Company__pc} type="text" data-id={rec.index}
+                                                    required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-combobox variant="label-standard" label={TypeOfCompanyPerAccLabel}
+                                                    data-id={rec.index} name="Type_Of_Company__c"
+                                                    options={TypeOfCompanyPerAccOptions} value={rec.Type_Of_Company__c}
+                                                    required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-combobox>
+                                            </td>
+                                            <td>
+                                                <lightning-combobox variant="label-standard" label={RoleInOrgPerAccLabel}
+                                                    data-id={rec.index} name="Role_In_Organization__c"
+                                                    options={RoleInOrgPerAccOptions} value={rec.Role_In_Organization__c}
+                                                    required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-combobox>
+                                            </td>
+                                        </template>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <template if:true={ShowFieldsEmpTypeSalaried}>
+        
+                                            <td>
+                                                <lightning-input label="Official Email Id" name="Official_Email_Id__pc"
+                                                    value={rec.Official_Email_Id__pc} placeholder="username@example.com"
+                                                    pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                                    message-when-pattern-mismatch="Please enter valid Email id" type="email"
+                                                    data-id={rec.index} required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Monthly Income" name="Monthly_Income__pc"
+                                                    value={rec.Monthly_Income__pc} type="number" data-id={rec.index}
+                                                    required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="No. of Years with Current Employer"
+                                                    name="No_Of_Years_with_Current_Employer__c"
+                                                    value={rec.No_Of_Years_with_Current_Employer__c} type="number"
+                                                    data-id={rec.index} required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Total Professional Experience"
+                                                    name="Total_Professional_Experience__c"
+                                                    value={rec.Total_Professional_Experience__c} type="number"
+                                                    data-id={rec.index} required="true" onchange={handleEmpTypeSalaried}>
+                                                </lightning-input>
+                                            </td>
+                                        </template>
+                                    </tr>
+        
+                                    <tr key={rec}>
+                                        <template if:true={ShowFieldsEmpTypeSEP}>
+                                            <td>
+                                                <lightning-input label="Nature of Professional" name="Nature_of_Professional__c"
+                                                    value={rec.Nature_of_Professional__c} type="text" data-id={rec.index}
+                                                    onchange={handleEmpTypeSEP}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Total Professional Experience"
+                                                    name="Total_Professional_Experience__c"
+                                                    value={rec.Total_Professional_Experience__c} type="number"
+                                                    data-id={rec.index} required="true" onchange={handleEmpTypeSEP}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Address of Current Business"
+                                                    name="Address_of_Current_Business__c"
+                                                    value={rec.Address_of_Current_Business__c} type="text" data-id={rec.index}
+                                                    required="true" onchange={handleEmpTypeSEP}>
+                                                </lightning-input>
+                                            </td>
+                                        </template>
+                                    </tr>
+        
+        
+                                    <tr key={rec}>
+                                        <template if:true={ShowFieldsEmpTypeSENonP}>
+                                            <td>
+                                                <lightning-input label="Membership Number" name="Membership_Number__c"
+                                                    value={rec.Membership_Number__c} type="text" data-id={rec.index}
+                                                    onchange={handleEmpTypeSENP}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="GST In" name="GST_IN__c" value={rec.GST_IN__c}
+                                                    type="text" data-id={rec.index} onchange={handleEmpTypeSENP}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Nature of Business" name="Nature_of_Business__c"
+                                                    value={rec.Nature_of_Business__c} type="text" data-id={rec.index}
+                                                    onchange={handleEmpTypeSENP}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Address of Current Business"
+                                                    name="Address_of_Current_Business__c"
+                                                    value={rec.Address_of_Current_Business__c} type="text" data-id={rec.index}
+                                                    required="true" onchange={handleEmpTypeSENP}>
+                                                </lightning-input>
+                                            </td>
+                                        </template>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <template if:true={ShowFieldsEmpTypeRetired}>
+                                            <td>
+                                                <lightning-input label="Date of Retirement" name="Date_of_Retirement__c"
+                                                    value={rec.Date_of_Retirement__c} type="date" data-id={rec.index}
+                                                    onchange={handleEmpTypeRetired}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Organisation Name" name="Organisation_Name__c"
+                                                    value={rec.Organisation_Name__c} type="text" data-id={rec.index}
+                                                    onchange={handleEmpTypeRetired}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Pension Amount" name="Pension_Amount__c"
+                                                    value={rec.Pension_Amount__c} type="text" data-id={rec.index}
+                                                    onchange={handleEmpTypeRetired}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input label="Total Professional Experience"
+                                                    name="Total_Professional_Experience__c"
+                                                    value={rec.Total_Professional_Experience__c} type="number"
+                                                    data-id={rec.index} required="true" onchange={handleEmpTypeRetired}>
+                                                </lightning-input>
+                                            </td>
+                                        </template>
+                                    </tr>
+        
+                                    <!-- Add / Delete Buttons -->
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                                alternative-text="Add Row"
+                                                onclick={addNewRowEmployment}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                            <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                                title="Remove" name={rec.index}
+                                                onclick={removeTheRowEmployment}></lightning-icon>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+                
+            
+        </div>
+    </template>
+    <template if:true={secSix}>
+        <div class={sectionClass}>
+            <!-- <h3 class="slds-section__title slds-p-horizontal_small">
+
+<span class="slds-truncate" title={label} style="color:rgb(246,94,3)">(A) Student
+    Details:</span>
+
+</h3> -->
+
+            <lightning-accordion allow-multiple-sections-open active-section-name="costofcourse" class="title1">
+                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="costofcourse"
+                    label="Cost of Course">
+                    <div class="slds-form-element slds-form-element_horizontal">
+                        <div
+                        class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                            <lightning-input label="Expected Tuition Fees" name="Expected Tuition Fees"
+                                value={loanExpecTuitionFees} type="number" onchange={handlechangeLoan} onblur={total} required="true">
+                            </lightning-input>
+                        </div>
+                        <div
+                        class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                            <lightning-input label="Living Expenses/Hostel and Food"
+                                name="Living Expenses/Hostel and Food" value={loanLivExpHostelFoodExp} onblur={total}
+                                type="number" onchange={handlechangeLoan}>
+                            </lightning-input>
+                        </div>
+                        <div
+                        class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                            <lightning-input label="Travelling Expenses" name="Travelling Expenses" onblur={total}
+                                value={loanTravelExp} type="number" onchange={handlechangeLoan}>
+                            </lightning-input>
+                        </div>
+                        <div
+                        class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                            <lightning-input label="Others" name="Others" value={loanOtherCost} type="number" onblur={total}
+                                onchange={handlechangeLoan}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-form-element_horizontal">
+                        <div
+                        class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                            <lightning-input label="Total Cost (Sum of above)" name="Total Cost (Sum of above)"
+                                value={loanTotalCostSum} type="number" onchange={handlechangeLoan} disabled="true">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="funds"
+                    label="Fund Required">
+                    <div>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <div
+                            class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                                <lightning-input label="Own Source" name="Own Source" value={loanOwnSource}
+                                    type="number" onchange={handlechangeFund}> 
+                                </lightning-input>
+                            </div>
+                            <div
+                            class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                                <lightning-input label="Scholarship" name="Scholarship" value={loanScholarship}
+                                    type="number" onchange={handlechangeFund}>
+                                </lightning-input>
+                            </div>
+                            <div
+                            class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                                <lightning-input label="Other Funds" name="Other Funds" value={loanOtherFunds}
+                                    type="number" onchange={handlechangeFund}>
+                                </lightning-input>
+                            </div>
+                            <div
+                            class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                                <lightning-input label="Total Fund (Sum of above)" name="Total Fund (Sum of above)"
+                                    value={loanTotalFunndsSum} type="number" onchange={handlechangeFund} disabled="true">
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <div
+                            class=" slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-p-around_small">
+                                <lightning-input label="Loan Required" name="Loan Required (A-B)"
+                                    value={loanLoanRequiredAB} type="number" required="true" onchange={handlechangeLoan} disabled="true">
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-card>
+                    <lightning-button class="button slds-align_absolute-center" label="Save"
+                        variant="brand" onclick={handleSaveLeadLoan}></lightning-button>
+                </lightning-card>
+            </lightning-accordion>
+        </div>
+    </template>
+    <template if:true={secSeven}>
+        <div class={sectionClass}>
+           
+                <lightning-accordion allow-multiple-sections-open active-section-name="financial" class="title1">
+                    <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="financial" label="Financial">
+                        <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                            <tbody>
+                                <template for:each={listOfFinancialTable} for:item="rec">
+        
+                                    <!-- FINANCIAL DETAILS -->
+                                    <tr key={rec}>
+                                        <td style="font-weight: bold;">
+                                            <!-- <lightning-input label="Applicant Name" name="" value='' type="text" data-id={rec.index}
+                                                    required="true" onchange={handlechange}>
+                                                </lightning-input> -->
+                                            <lightning-combobox name="applicantNames" label="Applicant Name" value={value}
+                                                options={TypeOptions} onchange={handleTypeChange}> </lightning-combobox>
+                                        </td>
+                                    </tr>
+        
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-input label="Account Holder Name" name="Account_Holder_Name__c"
+                                                value={rec.Account_Holder_Name__c} type="text" data-id={rec.index}
+                                                required="true" onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Name of Bank" name="Name of Bank" value="" type="text"
+                                                data-id={rec.index} required="true" onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Branch" name="branch" value="" type="text"
+                                                data-id={rec.index} required="true" onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Account Number" name="Account_Number__c"
+                                                value={rec.Account_Number__c} type="text" data-id={rec.index} required="true"
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                    </tr>
+        
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-input label="Account Number" name="Account_Number__c"
+                                                value={rec.Account_Number__c} type="text" data-id={rec.index} required="true"
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-combobox variant="label-standard" label={AccTypePerAccLabel}
+                                                data-id={rec.index} name="Account_Type__c" options={AccTypePerAccOptions}
+                                                value={rec.Account_Type__c} required="true" onblur={handlechange}>
+                                            </lightning-combobox>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Account Operational Since" name="Account_Open_Since__c"
+                                                value={rec.Account_Open_Since__c} type="date" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="IFSC Code" name="IFSC_Code__c" value={rec.IFSC_Code__c}
+                                                type="text" data-id={rec.index} required="true" onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-input label="MICR Code" name="MICR_Code__c" value={rec.MICR_Code__c}
+                                                type="text" data-id={rec.index} required="true" onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                    </tr>
+        
+                                    <!-- Add / Delete Buttons -->
+                                    <tr key={rec}>
+                                        <td>
+                                            <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                                alternative-text="Add Row"
+                                                onclick={addNewRowFinancial}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                            <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                                title="Remove" name={rec.index}
+                                                onclick={removeTheRowFinancial}></lightning-icon>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+           
+        </div>
+        <lightning-accordion allow-multiple-sections-open class="title1">
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="AssetDetails" label="Asset Details">
+                
+                <div class="docs-codeblock-example">
+                    <table class="slds-table newclass slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfAssetTable} for:item="rec">
+                                <tr key={rec}>
+                                    <td style="font-weight: bold;">
+                                        <lightning-combobox name="applicantNameAsset" label="Applicant Name" value={value}
+                                            options={isIncomeConsideroptions} onchange={handleTypeChange}>
+                                        </lightning-combobox>
+                                    </td>
+                                </tr>
+        
+                                <tr key={rec}>
+                                    <template if:true={ShowFieldsapplicantNameAssetIsIncome}>
+                                        <td>
+                                            <lightning-combobox variant="label-standard" label={AssetTypePerAccLabel}
+                                                data-id={rec.index} name="Asset_Type__c" options={AssetTypePerAccOptions}
+                                                value={rec.Asset_Type__c} required="true" onblur={handlechange}>
+                                            </lightning-combobox>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Asset Value" name="Asset_Value__c"
+                                                value={rec.Asset_Value__c} type="number" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Asset Description" name="Asset_Description__c"
+                                                value={rec.Asset_Description__c} type="text" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+                                </tr>
+        
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                            alternative-text="Add Row"
+                                            onclick={addNewRowAsset}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                            title="Remove" name={rec.index} onclick={removeTheRowAsset}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="LiabilitiesDetails" label="Liabilities Details">
+                <div class="docs-codeblock-example">
+                    <table class=" newclass slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfLiabilitiesTable} for:item="rec">
+                                <tr key={rec}>
+                                    <td style="font-weight: bold;">
+                                        <lightning-combobox name="applicantNameLiabilities" label="Applicant Name" value={value}
+                                            options={isIncomeConsideroptions} onchange={handleTypeChange}>
+                                        </lightning-combobox>
+                                    </td>
+                                </tr>
+        
+                                <tr key={rec}>
+                                    <template if:true={ShowFieldsapplicantNameLiabilitiesIsIncome}>
+                                        <td>
+                                            <lightning-combobox variant="label-standard" label={LoanTypePerAccLabel}
+                                                data-id={rec.index} name="Loan_Type__c" options={LoanTypePerAccOptions}
+                                                value={rec.Loan_Type__c} onblur={handlechange}>
+                                            </lightning-combobox>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Monthly Installment" name="Monthly_Installment__c"
+                                                value={rec.Monthly_Installment__c} type="number" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Balance Tenure in Month" name="Balance_Tenure__c"
+                                                value={rec.Balance_Tenure__c} type="number" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Outstanding Amount" name="Outstanding_Amount__c"
+                                                value={rec.Outstanding_Amount__c} type="number" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+                                </tr>
+        
+                                <tr key={rec}>
+                                    <template if:true={ShowFieldsapplicantNameLiabilitiesIsIncome}>
+                                        <td>
+                                            <lightning-input label="Original Amount" name="Original_Amount__c"
+                                                value={rec.Original_Amount__c} type="number" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+                                </tr>
+        
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                            alternative-text="Add Row"
+                                            onclick={addNewRowLiabilities}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                            title="Remove" name={rec.index} onclick={removeTheRowLiabilities}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion>
+
+    </template>
+    <template if:true={secEight}>
+        <div class={sectionClass}>
+            <lightning-accordion allow-multiple-sections-open class="title1" active-section-name="Collateral">
+                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="Collateral" label="Collateral Details">
+                    <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfCollateralTable} for:item="rec">
+    
+                                <!-- COLLATERAL DETAILS -->
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-input style="font-weight: bold;" type="checkbox" name="Security Offered?"
+                                            label="Security Offered?" checked=false required="true">
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-input label="Type of Security" name="Type_Of_Security__c"
+                                            value={rec.Type_Of_Security__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Value" name="Value__c" value={rec.Value__c} type="number"
+                                            data-id={rec.index} onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Area In SQ.FT" name="Area_Sq_Ft__c"
+                                            value={rec.Area_Sq_Ft__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-combobox variant="label-standard" label={localAuthorityLabel}
+                                            data-id={rec.index} name="Local_Authority__c" options={localAuthorityOptions}
+                                            value={localAuthorityValue} onblur={handlechange}>
+                                        </lightning-combobox>
+                                    </td>
+                                </tr>
+    
+                                <!-- Address Details -->
+                                
+                                <tr key={rec}>
+                                    <td colspan="4">
+                                        <div class="title-heading">Address Details</div>
+                                    </td>
+                                </tr>
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-input label="Building/House Name" name="Building_House_Name__c"
+                                            value={rec.Building_House_Name__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Building/House Number" name="Building_House_No__c"
+                                            value={rec.Building_House_No__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Wing" name="Wing__c" value={rec.Wing__c} type="text"
+                                            data-id={rec.index} onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Floor" name="Floor__c" value={rec.Floor__c} type="text"
+                                            data-id={rec.index} onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-input label="Survey/Plot No." name="Survey_Plot_No__c"
+                                            value={rec.Survey_Plot_No__c} type="number" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="City" name="City_Collateral__c"
+                                            value={rec.City_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Taluka" name="Taluka_Collateral__c"
+                                            value={rec.Taluka_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="District" name="District_Collateral__c"
+                                            value={rec.District_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-input label="State" name="State_Collateral__c"
+                                            value={rec.State_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Country" name="Country_Collateral__c"
+                                            value={rec.Country_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Landmark" name="Landmark_Collateral__c"
+                                            value={rec.Landmark_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Pin Code" name="Pin_Code_Collateral__c"
+                                            value={rec.Pin_Code_Collateral__c} type="text" data-id={rec.index}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+                                <tr key={rec}>
+                                    <td>
+                                        <!-- <lightning-input label="Property Owned By" name="Property_Owned_By__c"
+                                                value={rec.Property_Owned_By__c} type="text" data-id={rec.index}
+                                                onchange={handlechange}>
+                                            </lightning-input> -->
+                                        <lightning-combobox name="propertyOwnedBy" label="Property Owned By" value={value}
+                                            options={TypeOptions} onchange={handleTypeChange}> </lightning-combobox>
+                                    </td>
+                                </tr>
+    
+    
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                            alternative-text="Add Row"
+                                            onclick={addNewRowCollateral}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                            title="Remove" name={rec.index}
+                                            onclick={removeTheRowCollateral}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+    </template>
+    <template if:true={secNine}>
+        <div class={sectionClass}>
+            <lightning-accordion allow-multiple-sections-open class="title1" active-section-name="reference">
+                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="reference" label="Reference Details">
+                    <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfReferenceTable} for:item="rec">
+                                <!-- REFERENCE DETAILS -->
+                                <!-- Added by tushar : start -->
+                                <tr key={rec.Id}>
+                                    <td style="font-weight: bold;">
+                                        <lightning-combobox name="applicantNamesReference" label="Applicant Name" value={value}
+                                            options={TypeOptions} onchange={handleTypeChange} data-id={rec.Id}> </lightning-combobox>
+                                    </td>
+                                </tr>
+                                <!-- Added by tushar : end -->
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-input label="Reference First Name" name="Reference_First_Name__c"
+                                            value={rec.Reference_First_Name__c} type="text" data-id={rec.Id} pattern="[A-Za-z ]{1,40}"
+                                            message-when-pattern-mismatch="First Name should only contain lowercase or uppercase letters. e.g. John"
+                                            onchange={handlechange} required="true">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Reference Middle Name" name="Reference_Middle_Name__c"
+                                            value={rec.Reference_Middle_Name__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Reference Last Name" name="Reference_Last_Name__c"
+                                            value={rec.Reference_Last_Name__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Mobile Number" name="Mobile_No__c"
+                                            value={rec.Mobile_No__c} pattern="[0-9]{10}$"
+                                            message-when-pattern-mismatch="Mobile number must contains 10 digits only"
+                                            required="true" type="tel" data-id={rec.Id} onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+    
+                                <tr key={rec.id}>
+                                    <td>
+                                        <lightning-input label="Email Id" name="Email_Id__c"
+                                            value={rec.Email_Id__c} type="email" data-id={rec.Id}
+                                            placeholder="username@example.com"
+                                            pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                            message-when-pattern-mismatch="Please enter valid Email id"
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Landline Number" name="Landline_No__c"
+                                            value={rec.Landline_No__c} type="tel" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Occupation" name="Occupation__c"
+                                            value={rec.Occupation__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+                                <!-- Address Details -->
+                                <tr key={rec.Id}>
+                                    <td colspan="4">
+                                        <div class="title-heading">Address Details</div>
+                                    </td>
+                                </tr>
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-input label="Address 1" name="Reference_Address_1__c"
+                                            value={rec.Reference_Address_1__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Address 2" name="Reference_Address_2__c"
+                                            value={rec.Reference_Address_2__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Address 3" name="Reference_Address_3__c"
+                                            value={rec.Reference_Address_3__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="City" name="City__c"
+                                            value={rec.City__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+    
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-input label="District" name="District__c"
+                                            value={rec.District__c} type="text"
+                                            data-id={rec.Id} onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="State" name="State__c"
+                                            value={rec.State__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Country" name="Country__c"
+                                            value={rec.Country__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input label="Landmark" name="Landmark__c"
+                                            value={rec.Landmark__c} type="text" data-id={rec.Id}
+                                            onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-input label="Pin Code" name="Pin_Code__c" value="" type="text"
+                                            data-id={rec.Id} onchange={handlechange}>
+                                        </lightning-input>
+                                    </td>
+                                </tr>
+    
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row" data-id={rec.Id}
+                                            alternative-text="Add Row"
+                                            onclick={addRowReference}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove" data-id={rec.Id}
+                                            title="Remove" name={rec.Id}
+                                            onclick={removeRowReference}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </lightning-accordion-section>
+                <!--added by tushar-->
+                <lightning-card>
+                    <lightning-button 
+                        class="button slds-align_absolute-center"
+                        label="Save"
+                        variant="brand"
+                        onclick={handleSaveReference}>
+                    </lightning-button>
+                </lightning-card>
+            </lightning-accordion>
+        </div>
+    </template>
+    
+    <template if:true={secTen}>
+        <div class={sectionClass}>
+            <lightning-accordion allow-multiple-sections-open class="title1" active-section-name="upload">
+                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="upload"
+                    label="Upload Documents">
+                    <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={documentTable} for:item="rec">
+                                <tr key={rec}>
+                                    <td>
+                                        <lightning-combobox name="applicantNamesEmployment" label="Applicant Name"
+                                            value={value} options={TypeOptions} onchange={categoryChange}>
+                                        </lightning-combobox>
+                                    </td>
+                                </tr>
+
+
+                                <tr key={rec}>
+                                <template if:true={temApplicant}>
+                                    <!-- <tr key={rec}> -->
+                                        <!-- <td colspan="4">
+                                            <div class="title-heading">Applicant</div>
+                                        </td> -->
+                                    <!-- </tr> -->
+                                        <td colspan="4">
+                                            <div class="title-heading">Applicant</div>
+                                        </td>
+                                        
+                                    </template>
+                                </tr>
+                                <tr key={rec}>
+                                    <template if:true={temApplicant}>
+
+                                    <td>
+                                        <lightning-input type="file" variant="label-standard"
+                                        accept=".png, .pdf, .jpg, .jpeg"
+                                        label="Upload Aadhar Front Page" required="true"
+                                        onchange={openFrontfileUpload}>
+                                    </lightning-input>
+                                    <template if:true={fileDataFront}>
+                                        <p>{fileDataFront.filenameFront}</p>
+                                    </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" variant="label-standard"
+                                        accept=".png, .pdf, .jpg, .jpeg"
+                                        label="Upload Aadhar Back Page" required="true"
+                                        onchange={openFrontfileUpload}>
+                                    </lightning-input>
+                                    <template if:true={fileDataFront}>
+                                        <p>{fileDataFront.filenameFront}</p>
+                                    </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Passport Front Page" required="true"
+                                            onchange={openFrontfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Passport Back Page" required="true"
+                                            onchange={openBackfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                </template>
+
+                                </tr>
+                                <tr key={rec}>
+                                    <template if:true={temApplicant}>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Visa" required="true"
+                                            onchange={openFrontfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload PAN" required="true"
+                                            onchange={openFrontfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Voter Id Front Page" onchange={openFrontfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Voter Id Back Page" onchange={openBackfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                </template>
+                                </tr>
+                                <tr key={rec}>
+                                    <template if:true={temApplicant}>
+                                   
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Driving License Front Page"
+                                            onchange={openFrontfileUpload}></lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Driving License Back Page"
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Student Bank Statement"
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .jpg, .jpeg"
+                                            label="Photo (Please Upload PNG , JPG , JPEG only)" 
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                </template>
+                                </tr>
+                                <tr key={rec}>
+                                    <template if:true={temApplicant}>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Income Proof"
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Other Document 1"
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Other Document 2"
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Other Document 3"
+                                            onchange={openBackfileUpload}></lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                    
+                                    
+                                </template>
+                            </tr>
+                            <tr key={rec}>
+                                <template if:true={temApplicant}>
+                                    <td colspan="4">
+                                        <div class="title-heading">Past Academics</div>
+                                    </td>
+                                </template>
+                                </tr>
+                                <tr key={rec}>
+                                    <template if:true={temApplicant}>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                        label="SSC"
+                                        onchange={openBackfileUpload}></lightning-input>
+                                    <template if:true={fileDataBack}>
+                                        <p>{fileDataBack.filenameBack}</p>
+                                    </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                        label="HSC"
+                                        onchange={openBackfileUpload}></lightning-input>
+                                    <template if:true={fileDataBack}>
+                                        <p>{fileDataBack.filenameBack}</p>
+                                    </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                        label="Graduation"
+                                        onchange={openBackfileUpload}></lightning-input>
+                                    <template if:true={fileDataBack}>
+                                        <p>{fileDataBack.filenameBack}</p>
+                                    </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                        label="Other Educational Document"
+                                        onchange={openBackfileUpload}></lightning-input>
+                                    <template if:true={fileDataBack}>
+                                        <p>{fileDataBack.filenameBack}</p>
+                                    </template>
+                                </td>
+                            </template>
+                        </tr>
+                        <tr key={rec}>
+                            <template if:true={temApplicant}>
+                                <td colspan="4">
+                                    <div class="title-heading">Admission Documents</div>
+                                </td>
+                            </template>
+                        </tr>
+                        <tr key={rec}>
+                                    <template if:true={temApplicant}>
+                                    
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                        label="Language Test Score"
+                                        onchange={openBackfileUpload}></lightning-input>
+                                    <template if:true={fileDataBack}>
+                                        <p>{fileDataBack.filenameBack}</p>
+                                    </template>
+                                    </td>
+                                    <td>
+                                        <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                        label="Analytical Test Score"
+                                        onchange={openBackfileUpload}></lightning-input>
+                                    <template if:true={fileDataBack}>
+                                        <p>{fileDataBack.filenameBack}</p>
+                                    </template>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </template>
+                            
+                        </tr>
+                        
+                        <tr key={rec}>
+                            <template if:true={temCoApplicant}>
+                                <td colspan="4">
+                                    <div class="title-heading">Co-Applicant</div>
+                                </td>
+                            </template>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <template if:true={temCoApplicant}>
+                                        <td>
+                                            <lightning-input type="file" variant="label-standard"
+                                            accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Aadhar Front Page" required="true"
+                                            onchange={openFrontfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" variant="label-standard"
+                                            accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload Aadhar Back Page" required="true"
+                                            onchange={openFrontfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataFront}>
+                                            <p>{fileDataFront.filenameFront}</p>
+                                        </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Upload Passport Front Page" required="true"
+                                                onchange={openFrontfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataFront}>
+                                                <p>{fileDataFront.filenameFront}</p>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Upload Passport Back Page" required="true"
+                                                onchange={openBackfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataBack}>
+                                                <p>{fileDataBack.filenameBack}</p>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <template if:true={temCoApplicant}>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Upload Photo" required="true"
+                                                onchange={openFrontfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataFront}>
+                                                <p>{fileDataFront.filenameFront}</p>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Upload PAN" required="true"
+                                                onchange={openFrontfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataFront}>
+                                                <p>{fileDataFront.filenameFront}</p>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Upload Voter Id Front Page" onchange={openFrontfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataFront}>
+                                                <p>{fileDataFront.filenameFront}</p>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Upload Voter Id Back Page" onchange={openBackfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataBack}>
+                                                <p>{fileDataBack.filenameBack}</p>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <template if:true={temCoApplicant}>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Upload 8 Month Bank Statement" onchange={openBackfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="Income Proof" onchange={openBackfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="other Document 1" onchange={openBackfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                            label="other document 2" onchange={openBackfileUpload}>
+                                        </lightning-input>
+                                        <template if:true={fileDataBack}>
+                                            <p>{fileDataBack.filenameBack}</p>
+                                        </template>
+                                    </td>
+                                </template>
+                                    </tr>
+                                    <tr key={rec}>
+                                        <template if:true={temCoApplicant}>
+
+                                            <td>
+                                                <lightning-input type="file" accept=".png, .pdf, .jpg, .jpeg"
+                                                label="Other Document 3" onchange={openBackfileUpload}>
+                                            </lightning-input>
+                                            <template if:true={fileDataBack}>
+                                                <p>{fileDataBack.filenameBack}</p>
+                                            </template>
+                                        </td>
+                                        
+                                    </template>
+                                    </tr>
+                                    
+                                </template>
+                            </tbody>
+                    </table>
+                </lightning-accordion-section>
+            </lightning-accordion>
+
+        </div>
+    </template>
+</template>

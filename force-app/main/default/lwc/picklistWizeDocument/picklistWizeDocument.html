@@ -1,0 +1,38 @@
+<template>
+    <div class="container">
+        <div class="select-box">
+            <lightning-combobox
+                name="selectApplicant"
+                label="Select Applicant/Co-Applicant"
+                value={selectedapplicant}
+                options={applicantlist}
+                onchange={handleChangenew}
+            ></lightning-combobox>
+        </div>
+        <div class="select-box">
+            <lightning-combobox
+                name="selectDocument"
+                label="Select Document"
+                value={selectedValue}
+                options={picklistOptions}
+                onchange={handleChange}
+            ></lightning-combobox>
+        </div>
+        <div class="main-container">
+            <div class="zoom-buttons">
+                <lightning-button-icon icon-name="utility:zoomin" alternative-text="Zoom In" title="Zoom In" onclick={zoomIn}></lightning-button-icon>
+                <lightning-button-icon icon-name="utility:zoomout" alternative-text="Zoom Out" title="Zoom Out" onclick={zoomOut}></lightning-button-icon>
+            </div>
+            <div class="image-container">
+                <iframe src={PublicUrl} style={imageStyles} class="increase_height"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- harsh -->
+   
+    <!-- <targetConfig targets="lightning__FlowScreen">
+        <property name="inputevalue" type="String" label="applicant id"></property>
+    </targetConfig> -->
+<!-- /harsh -->
+</template>
+<!-- //password123@ -->

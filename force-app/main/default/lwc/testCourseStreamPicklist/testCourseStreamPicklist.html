@@ -1,0 +1,50 @@
+<template>
+    <lightning-combobox name="Course Sub Stream"
+                        label="Course Sub Stream"
+                        placeholder="Select Course Sub Stream"
+                        options={CSubStreamFieldData}
+                        onchange={handleCourseStreamChange}>
+    </lightning-combobox>
+    <lightning-combobox name="Course Stream"
+                        label="Course Stream"
+                        placeholder="Select Course Stream"
+                        options={courseStreamOptions}>
+    </lightning-combobox>
+
+    <!-- DIFFERENT CODE -->
+    
+        <div class=" slds-card">
+            <div class="slds-grid slds-gutters slds-p-top_small slds-p-bottom_large slds-wrap">
+                <div class="slds-col slds-size_4-of-12">
+                </div>
+                <!-- <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox name="Car" label="Car" placeholder="Select Car Name" options={carValues} required
+                        onchange={handleCarChange} value={selectedCarValue}>
+                    </lightning-combobox>
+                </div> -->
+                <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox name="Course Sub Stream" label="Course Sub Stream" placeholder="Select Course Sub Stream" options={courseSubStreamValues} required
+                        onchange={handleCarChange} value={selectedCourSubStreamValue}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+            </div>
+                <div class="slds-col slds-size_4-of-12">
+                </div>
+                <!-- <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox name="Car Color" label="Car Color" placeholder="Select Car Color" options={carColorValues} required
+                    onchange={handleCarColorChange} value={selectedCarColorValue}>
+                </lightning-combobox>
+                </div> -->
+
+                <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox name="Course Stream" label="Course Stream" placeholder="Select Course Stream" options={courStreamValue} required
+                    onchange={handleCarColorChange} value={selectedCourStreamValue}>
+                </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                </div>           
+            </div>     
+        </div>
+     
+</template>

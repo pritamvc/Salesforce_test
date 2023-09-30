@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+      <target>lightning__AppPage</target>
+      <target>lightning__HomePage</target>
+      <target>lightning__RecordPage</target>
+            <target>lightningCommunity__Page</target>
+      <target>lightningCommunity__Default</target>
+    </targets>
+ 
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage, lightning__HomePage,lightning__RecordPage">
+            <property name="image" type="String"  label="Enter static resource name"></property>
+            <property name="Height" type="String"  label="Height" ></property>
+           <property name="Width" type="String"  label="width" ></property>
+        </targetConfig>
+                <targetConfig targets ="lightningCommunity__Default">
+            <property name="image" type="String"  label="Enter static resource name"></property>
+            <property name="Height" type="String"  label="Height"></property>
+           <property name="Width" type="String"  label="width"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

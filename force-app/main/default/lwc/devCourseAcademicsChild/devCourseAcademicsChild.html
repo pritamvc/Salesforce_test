@@ -1,0 +1,300 @@
+<!--
+  @author            : Chandrakant More
+  @description       : This is the child component for loanApplicationForm.
+  @last modified on  : 18-05-2023 (DD/MM/YYYY)
+-->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-accordion allow-multiple-sections-open active-section-name="course" class="title1">
+        <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="course" label="Course">
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CountryOfStudyLabel} label={CountryOfStudyLabel}
+                        value={CountryOfStudyValue} options={CountryOfStudyFieldOptions} required="true"
+                        onchange={handlechange}>
+                    </lightning-combobox>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={AdmissionStatusLabel} label={AdmissionStatusLabel} value={AdmissionStatus}
+                        options={AdmissionStatusOptions} required="true" onchange={handleCourseUniversityShowHide}>
+                    </lightning-combobox>
+                </div>
+                <template if:true={ShowFieldsCourseUniversity}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <c-lead-course-and-academics-helper label="Institute" placeholder="Select institute ..."
+                            onselect={handleInstitute} object-api-name="Institute__c" value={InstituteId}
+                            country-of-study={CountryOfStudyValue}>
+                        </c-lead-course-and-academics-helper>
+                    </div>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="University" type="text" value={universityNameString}
+                            disabled={isFieldDisabled}>
+                        </lightning-input>
+                    </div>
+                </template>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <template if:true={ShowFieldsCourseUniversity}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input type="text" name="Campus" label="Campus" value={courseCampus} onblur={handlechange}>
+                        </lightning-input>
+                    </div>
+                </template>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CourseCategoryLabel} label={CourseCategoryLabel} required="true"
+                        value={CourseCategoryValue} options={CourseCategoryOptions} onchange={handlechange}>
+                    </lightning-combobox>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CourseTypeLabel} label={CourseTypeLabel} required="true"
+                        value={CourseTypeValue} options={CourseTypeOptions} onchange={handlechange}>
+                    </lightning-combobox>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CourseLevelLabel} label={CourseLevelLabel} required="true"
+                        value={CourseLevelValue} options={CourseLevelOptions} onchange={handlechange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap">
+                <template if:false={InstituteId}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Course" type="search" placeholder="Select Courses..">
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:true={InstituteId}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <c-lead-course-and-academics-helper label="Course" placeholder="Select Courses.."
+                            onselect={handleCourse} object-api-name="Course__c" parent-id={InstituteId}
+                            value={courseName}
+                            country-of-study={CountryOfStudyValue}></c-lead-course-and-academics-helper>
+                    </div>
+                </template>
+
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CourseStreamLabel} label={CourseStreamLabel} required="true"
+                        value={CourseStreamValue} options={CourseStreamOptions} onchange={handlechange}>
+                    </lightning-combobox>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CourseSubStreamLabel} label={CourseSubStreamLabel} value={CourseSubStreamValue} options={CourseSubStreamOptions} onchange={handlechange}>
+                    </lightning-combobox>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="date" label="Course Start Date" value={courseStartDate}
+                        name="courseStartDate" onchange={handleStartDate}>
+                    </lightning-input>
+                </div>               
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox name={CourseDurationLabel} label={CourseDurationLabel} value={CourseDurationValue}
+                        options={CourseDurationOptions} required="true" onchange={handleCourseDuration}>
+                    </lightning-combobox>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-input type="date" label="Course End Date" value={courseEndDate} name="courseEndDate"
+                        onchange={handleEndDate} disabled="true">
+                    </lightning-input>
+                </div>
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox variant="label-standard" label={LangScoreCategoryLabel}
+                        name="Language Score Category" options={LangScoreCategoryOptions} value={LangScoreCategoryValue}
+                        required="true" onchange={handleLangScore} class="dropdown">
+                    </lightning-combobox>
+                </div>
+                <template if:true={isLangScoreShowHide}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Language Test Score" name="langTestScore" value={langTestScore}
+                            required="true" type="number" step="0.01" onblur={handleLangScore}>
+                        </lightning-input>
+                    </div>
+                </template>                
+                
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div
+                    class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                    <lightning-combobox variant="label-standard" label={AnalytScoreCategoryLabel}
+                        name="Analytics Score Category" options={AnalytScoreCategoryOptions}
+                        value={AnalytScoreCategoryValue} required="true" onchange={handleAnalyticalScore} class="dropdown">
+                    </lightning-combobox>
+                </div>
+                <template if:true={isAnalyticScoreShowHide}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Analytical Test Score" name="analyticalTestScore"
+                            value={analyticalTestScore} step="0.01" required="true" type="number"
+                            onblur={handleAnalyticalScore}>
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:true={isQuantVerbalShowHide}>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Quantitative Score" name="QuanTestScore" value={quanTestScore}
+                            step="0.01" required="true" type="number" onblur={handleAnalyticalScore}>
+                        </lightning-input>
+                    </div>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Verbal Score" name="VerbalTestScore" value={verbalTestScore} step="0.01"
+                            required="true" type="number" onblur={handleAnalyticalScore}>
+                        </lightning-input>
+                    </div>
+                </template>
+            </div><br/><br/><br/><br/><br/><br/>
+        </lightning-accordion-section>
+        <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="education"
+            label="Education">            
+            <div
+                class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small slds-clearfix">
+                <lightning-combobox variant="label-standard" label="What is your highest education qualification?"
+                    name="QuesForEducationDetails" options={EducationDetailsOptions} value={QuesForEducationDetails}
+                    onchange={handleQuesForEducationDetails} required="true">
+                </lightning-combobox>
+            </div>
+            <div class="docs-codeblock-example">
+                <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                    <tbody>
+                        <template for:each={listOfEducationalTable} for:item="rec">
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-combobox variant="label-standard" label={EducationDetailsLabel}
+                                        data-id={rec.Id} name="EducationDetails" options={EducationDetailsOptions}
+                                        value={rec.Education_Qualification__c} onchange={updateValues} required="true">
+                                    </lightning-combobox>
+                                </td>
+                                <td>
+                                    <template if:true={TypeOfScoreOptions.data}>
+                                        <lightning-combobox variant="label-standard" label="Type of Score"
+                                            data-id={rec.Id} name="TypeOfScore" options={TypeOfScoreOptions.data.values}
+                                            value={rec.Type_of_Score__c} onchange={updateValues} required="true">
+                                        </lightning-combobox></template>
+                                </td>
+
+                                <td>
+                                    <lightning-input label="CGPA" name="CGPAMarks" value={rec.CGPA__c}
+                                        pattern={rec.patternValue} step="0.01"
+                                        message-when-pattern-mismatch="Please enter a valid CGPA" type="number"
+                                        data-id={rec.Id} onchange={updateValues} disabled={rec.cgpaDisable}>
+                                    </lightning-input>
+                                </td>
+
+                                <td>
+                                    <lightning-input label="Final Percentage" name="PercentageMarks"
+                                        value={rec.Percentage_Marks_CGPA__c} step="0.01"
+                                        pattern="^(?!0*(\.0+)?$)\d{1,2}(\.\d{1,2})?$"
+                                        message-when-pattern-mismatch="Please enter a valid percentage" type="number"
+                                        data-id={rec.Id} onchange={updateValues}>
+                                    </lightning-input>
+                                </td>
+                            </tr>
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-input label="School/College" name="SchoolCollegeUniversity"
+                                        value={rec.School_College_University__c} pattern="[A-Za-z ]{1,100}"
+                                        message-when-pattern-mismatch="Please enter a valid School/College name"
+                                        required="true" type="text" data-id={rec.Id} onchange={updateValues}>
+                                    </lightning-input>
+                                </td>
+
+                                <td>
+                                    <lightning-input label="University Name" name="University"
+                                        value={rec.University_Name__c} pattern="[A-Za-z ]{1,100}"
+                                        message-when-pattern-mismatch="Please enter a valid University Name"
+                                        required="true" type="text" data-id={rec.Id} onchange={updateValues}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Course Name" name="CourseNameEdu" value={rec.Course_Name__c}
+                                        pattern="[A-Za-z ]{1,100}"
+                                        message-when-pattern-mismatch="Please enter valid course name" type="text"
+                                        data-id={rec.Id} onchange={updateValues}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Course Stream" name="CourseStreamEdu"
+                                        value={rec.Course_Stream__c} pattern="[A-Za-z ]{1,100}"
+                                        message-when-pattern-mismatch="Please enter valid course stream" type="text"
+                                        data-id={rec.Id} onchange={updateValues}>
+                                    </lightning-input>
+                                </td>
+
+                            </tr>
+                            <tr key={rec.Id}>
+                                <template if:true={rec.startDate}>
+                                    <td>
+                                        <lightning-input label="Course Start Date" name="StartDate"
+                                            value={rec.Course_Start_Date__c} required="true" type="date"
+                                            data-id={rec.Id} max={todaysDate} onchange={updateValues}>
+                                        </lightning-input>
+                                    </td>
+                                </template>
+                                <td>
+                                    <lightning-input label="Course End Date" name="EndDate"
+                                        value={rec.Year_Completed__c} max={todaysDate} required="true" type="date"
+                                        data-id={rec.Id} onchange={updateValues}>
+                                    </lightning-input>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <!-- Add / Delete Buttons -->
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                        alternative-text="Add Row" onclick={addRow}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                    <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                        title="Remove" data-id={rec.Id} onclick={removeTheRowEducational}>
+                                    </lightning-icon>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <lightning-card>
+        <!-- <br><br> -->
+        <lightning-layout multiple-rows horizontal-align="center">
+            <lightning-layout-item>
+                <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                    label="Save as draft" variant="brand" onclick={handleSaveCourseEduSection}>
+                </lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item size="auto">
+                <div style="margin-left: 10px;">
+                    <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                        label="Save and Next" variant="brand" onclick={handleNextCourseEduSection}>
+                    </lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

@@ -1,0 +1,31 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 08-08-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="slds-m-left_small">
+        <template if:false={shouldShowAdditionalTemplate}>
+        <template if:false={fileUploaded}>
+            <!-- <lightning-input type="file" name="fileUploader" accept={acceptedFormats} record-id={recordId}
+                onchange={openfileUpload}>
+            </lightning-input> -->
+                <lightning-file-upload
+                    name="fileUploader"
+                    accept={acceptedFormatssss}              
+                    record-id={recordId}
+                    onuploadfinished={openfileUpload}
+                ></lightning-file-upload>
+            
+        </template>
+        <template if:true={fileUploaded}>
+            No Action Required
+        </template>
+    </template>
+        <template if:true={shouldShowAdditionalTemplate}>
+             
+        </template>
+    </div>
+</template>

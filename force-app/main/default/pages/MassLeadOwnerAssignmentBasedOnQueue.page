@@ -1,0 +1,4 @@
+<apex:page standardController="Lead" recordSetVar="accs" extensions="MassLeadOwnerAssignmentBasedOnQueue">
+<apex:includeScript value="/soap/ajax/18.0/connection.js"/>
+   <apex:outputText value="{!accIds}" />
+</apex:page>

@@ -1,0 +1,61 @@
+<template>
+    <lightning-card title="Community Login Page" icon-name="standard:logging">
+      <div class="slds-p-around_small slds-m-around_small">
+<div class="slds-p-top_none boxandmargin" >
+        <div class="slds-is-relative" >
+         <!-- <lightning-icon size="x-small"
+                            title="Mobile number" 
+                            icon-name="utility:phone_portrait" 
+                            alternative-text="Mobile Number"
+                            class="input-icon right-icon">
+            </lightning-icon>
+          -->   
+            <lightning-input type="tel" 
+                             label="Enter Mobile number" 
+                             placeholder="Enter Here......."
+                             pattern="[0-9]{10}$"
+                             message-when-pattern-mismatch="Mobile number must contain 10 digits only"
+                             onchange={changeMobHandler}  >
+            </lightning-input>
+        
+        </div>
+        
+           <div class="slds-m-around_small" style="width: 80%;">     
+             <lightning-button  variant="brand" 
+                                label="send verification code " 
+                                title="send verification code" 
+                                onclick={handleClick} 
+                                class="slds-m-left_x-small"
+                                disabled={otpBtn}>
+             </lightning-button>   
+        </div>
+    
+    </div>
+    </div>
+    <template if:true={showModalMobile}>
+      <section
+          style="width: 400px; height: 140%; padding: 10px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+          role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                      title="Close" onclick={closeModalMobile}>
+                      <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                      <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 class="slds-text-heading_medium slds-hyphenate">Mobile Verification</h2>
+              </header>
+              <div class="slds-modal__content">
+                  <lightning-input style="padding: 15px" type="text" label="Enter OTP" onchange={handleOtpforMob}
+                      value={otpValueMob} name="otp" required="true"></lightning-input>
+                  <p class="errormsg">{errormsg}</p>
+              </div>
+              <footer class="slds-modal__footer">
+                  <button class="slds-button slds-button_brand" onclick={handleVerifyMob}>Verify</button>
+              </footer>
+          </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,34 @@
+<apex:page standardController="Account" extensions="ApplicantPDFGenerator" renderAs="pdf"  applyHtmlTag="false" showHeader="false" standardStylesheets="false" >
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!accountRecords}" var="acc">
+            <apex:column headerValue="Salutation">
+                <apex:outputText value="{!acc.Salutation}" />
+            </apex:column>
+            <apex:column headerValue="First Name">
+                <apex:outputText value="{!acc.FirstName}" />
+            </apex:column>
+            <apex:column headerValue="Last Name">
+                <apex:outputText value="{!acc.LastName}" />
+            </apex:column>
+            <apex:column headerValue="Email">
+                <apex:outputText value="{!acc.Email__c}" />
+            </apex:column>
+            <apex:column headerValue="Co_Applicant Is_Income_Considered_Financial">
+                <apex:repeat value="{!acc.Applicants1__r}" var="coapp">
+                    <apex:outputText value="{!coapp.Is_Income_Considered_Financial__c}" />
+                </apex:repeat>
+            </apex:column>
+            <apex:column headerValue="ContactPointAddresses Address_Proof">
+                <apex:repeat value="{!acc.Contact_Point_Addresses__r}" var="address">
+                    <apex:outputText value="{!address.Address_Proof__c}" />
+                </apex:repeat>
+            </apex:column>
+            <apex:column headerValue="Demographies Father's First Name">
+                <apex:repeat value="{!acc.Demography__r}" var="demography">
+                    <apex:outputText value="{!demography.Father_s_First_Name__c}" />
+                </apex:repeat>
+            </apex:column>
+            <!-- Add more apex:column components for other fields -->
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

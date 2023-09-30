@@ -1,0 +1,23 @@
+<template>
+    
+    <div style="background: #EFEFEF;">
+        <lightning-card>
+            <div class="slds-p-horizontal_x-small">
+                <lightning-tabset active-tab-value={activeChild} selected-tab-id={activeChild}>
+                    <lightning-tab label="Basic Details" value=1  onactive={handleTabActivated}>
+                        <lightning-flow flow-api-name ='Test_Customer_Basic_Details'></lightning-flow>
+                    </lightning-tab>
+                   
+                    <lightning-tab label="Bank Details" title="2nd tab extended title" value=2 onactive={handleTabActivated}>
+                        <lightning-flow flow-api-name ='BankDetails'></lightning-flow>
+                    </lightning-tab>
+
+                    <lightning-tab label="Educational Details"  value=3  onactive={handleTabActivated}>
+                        <lightning-flow flow-api-name ='First_Screen'></lightning-flow>
+                    </lightning-tab> 
+                    
+                </lightning-tabset>
+            </div>
+        </lightning-card>
+    </div>
+  </template>

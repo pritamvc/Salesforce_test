@@ -1,0 +1,241 @@
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+
+    <div class={sectionClass}>
+        <lightning-accordion allow-multiple-sections-open class="title1" active-section-name="Collateral">
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="Collateral"
+                label="Collateral Details">
+                    <div 
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small slds-clearfix">
+                        <lightning-input type="checkbox" name="securityOffered" label="Is Security Offered?" data-id="securityOffered"
+                            onchange={handleSecurityOffered} checked={SecurityOfferedChecked}></lightning-input>
+                    </div>
+                    <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfCollateralTable} for:item="rec">
+
+                            <tr key={rec.Id}>
+                                <template if:true={securityOfferedShowHide}>
+                                    <td style="font-weight: bold;">
+                                        <lightning-combobox name="propertyOwnedBy" label="Property Owned By"
+                                            value={rec.AccountId} options={TypeOptionsCollateral} data-id={rec.Id}
+                                            onchange={handleTypeChangeAssetColl} required="true"> </lightning-combobox>
+                                    </td>
+                                </template>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr key={rec.Id}>
+                                <template if:true={securityOfferedShowHide}>
+                                    <td>
+                                        <lightning-combobox variant="label-standard"
+                                            label={typeOfSecurityCollAssetLabel} data-id={rec.Id}
+                                            name="Collateral_Type__c" options={typeOfSecurityCollAssetOptions}
+                                            value={rec.Collateral_Type__c} onchange={handleAssetCollType}
+                                            required="true">
+                                        </lightning-combobox>
+                                    </td>
+
+                                    <template if:true={rec.ShowCollateralFDBankBal}>
+                                        <td>
+                                            <lightning-input label="Value" name="Asset_Value__c"
+                                                value={rec.Asset_Value__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeAssetCollateral} pattern="[0-9]{1,10}"
+                                                message-when-pattern-mismatch="Please enter a valid number"
+                                                required="true">
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+                                    <template if:false={rec.ShowCollateralFDBankBal}>
+                                        <td></td>
+                                        <td></td>
+                                    </template>
+                                    <template if:true={rec.ShowCollateralResiPlotComm}>
+                                        <td>
+                                            <lightning-input label="Area In SQ.FT" name="Area_Sq_Ft__c"
+                                                value={rec.Area_Sq_Ft__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeAssetCollateral} required="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-combobox variant="label-standard" label={localAuthorityLabel}
+                                                data-id={rec.Id} name="Local_Authority__c"
+                                                options={localAuthorityOptions} value={rec.Local_Authority__c}
+                                                onblur={handlechangeAssetCollateral} required="true">
+                                            </lightning-combobox>
+                                        </td>
+                                    </template>
+                                </template>
+                            </tr>
+
+                            <!-- Address Details -->
+                            <template if:true={securityOfferedShowHide}>
+                                <tr key={rec.Id}>
+                                    <template if:true={rec.ShowCollateralResiPlotComm}>
+                                        <td colspan="4">
+                                            <div class="title-heading">Property Details(Address)</div>
+                                        </td>
+                                    </template>
+                                </tr>
+                                <tr key={rec.Id}>
+                                    <template if:true={rec.ShowCollateralResiPlotComm}>
+                                        <td>
+                                            <lightning-input label="Building/House Name" name="Building_House_Name__c"
+                                                value={rec.Building_House_Name__c} type="text" data-id={rec.Id}
+                                                onchange={handlechangeAssetCollateral} required="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Building/House Number" name="Building_House_No__c"
+                                                value={rec.Building_House_No__c} type="text" data-id={rec.Id}
+                                                onchange={handlechangeAssetCollateral} required="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Wing" name="Wing__c" value={rec.Wing__c} type="text"
+                                                data-id={rec.Id} onchange={handlechangeAssetCollateral}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Floor" name="Floor__c" value={rec.Floor__c}
+                                                type="text" data-id={rec.Id} onchange={handlechangeAssetCollateral}
+                                                required="true">
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+                                </tr>
+                                <tr key={rec.Id}>
+                                    <template if:true={rec.ShowCollateralResiPlotComm}>
+                                        <td>
+                                            <lightning-input label="Survey/Plot No." name="Survey_Plot_No__c"
+                                                value={rec.Survey_Plot_No__c} type="text" data-id={rec.Id}
+                                                onchange={handlechangeAssetCollateral}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-record-edit-form object-api-name="Asset">
+                                                <lightning-input-field field-name="Pin_Code__c" value={rec.Pin_Code__c}
+                                                    name="PincodeAssetColl" onchange={handleAssetCollPincode}
+                                                    data-id={rec.Id} required="true">
+                                                </lightning-input-field>
+                                            </lightning-record-edit-form>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="City" name="City__c" value={rec.City__c} type="text"
+                                                data-id={rec.Id} onchange={handlechangeAssetCollateral} disabled="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="District/Taluka"
+                                                name="Area_Taluka_District_Area_name__c"
+                                                value={rec.Area_Taluka_District_Area_name__c} type="text"
+                                                data-id={rec.Id} onchange={handlechangeAssetCollateral} disabled="true">
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+                                </tr>
+                                <tr key={rec.Id}>
+                                    <template if:true={rec.ShowCollateralResiPlotComm}>
+                                        <td>
+                                            <lightning-input label="State" name="State__c" value={rec.State__c}
+                                                type="text" data-id={rec.Id} onchange={handlechangeAssetCollateral}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Country" name="Country__c" value={rec.Country__c}
+                                                type="text" data-id={rec.Id} onchange={handlechangeAssetCollateral}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Landmark" name="Landmark__c" value={rec.Landmark__c}
+                                                type="text" data-id={rec.Id} onchange={handlechangeAssetCollateral}>
+                                            </lightning-input>
+                                        </td>
+                                    </template>
+
+                                </tr>
+
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                            alternative-text="Add Row"
+                                            onclick={addNewRowCollateral}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small"
+                                            alternative-text="Remove" title="Remove" data-id={rec.Id}
+                                            onclick={removeTheRowCollateral}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </lightning-accordion-section>
+            <!-- <lightning-card>
+                <template if:true={saveButtonShowHide}>
+                    <lightning-button class="button slds-align_absolute-center" style="width: fit-content;" label="Save"
+                        variant="brand" onclick={handleSaveCollateral}>
+                    </lightning-button>
+                </template>
+            </lightning-card> -->
+            <template if:true={saveButtonShowHide}>
+            <lightning-card>
+                <lightning-layout multiple-rows horizontal-align="center">
+                    <lightning-layout-item>
+                        <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                            label="Save as draft" variant="brand" onclick={handleSaveAsDraftCollateral}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="auto">
+                        <div style="margin-left: 10px;">
+                            <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                                label="Save and Next" variant="brand" onclick={handleNextCollateral}>
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                </lightning-card></template>
+        </lightning-accordion>
+    </div>
+
+    <!--Modal code which take action from user-->
+    <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Collateral Deletion Confirm Screen</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>Are you sure you want to delete?
+                    </b></p>
+                    
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

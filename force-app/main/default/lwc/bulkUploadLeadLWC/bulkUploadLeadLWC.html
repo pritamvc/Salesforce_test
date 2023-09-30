@@ -1,0 +1,22 @@
+<template>
+    <lightning-card class="slds-align_absolute-center" title="Upload Excel (CSV)" icon-name="custom:custom19">
+        <br/>
+        <div slot="footer" style="min-height: 32px;">
+            <lightning-layout if:true={loading}>
+                <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+                    <lightning-progress-bar value={loadingProgress} variant="circular"></lightning-progress-bar>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+         <div class="slds-m-horizontal_small">
+            <lightning-layout vertical-align="center" horizontal-align="center">
+                <lightning-layout-item flexibility="auto" padding="around-small">
+        <lightning-input label="Import Lines" name="Import Lines" class="slds-form-element"
+        accept={acceptedFormats} onchange={handleImportLines} type="file" variant="label-hidden">
+    </lightning-input>
+</lightning-layout-item>
+</lightning-layout>
+</div>
+    </lightning-card>
+    
+</template>

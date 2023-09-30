@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Custom Metadata Relationship Fields" icon-name="standard:relationships">
+      <template if:true={fieldMappings}>
+        <lightning-layout multiple-rows>
+          <template for:each={fieldMappings} for:item="fieldMapping">
+            <lightning-layout-item key={fieldMapping.Id} size="12" small-device-size="6" medium-device-size="4"
+              large-device-size="3">
+              <lightning-card title={fieldMapping.label}>
+                <div class="slds-p-horizontal_small">
+                  <p>Object API Name: {fieldMapping.Object_API_Name__c}</p>
+                  <p>Field API Name: {fieldMapping.Field_API_Name__c}</p>
+                  <p>Relationship Field: {fieldMapping.Relationship_Field__c}</p>
+                  <p>Lookup API Name: {fieldMapping.Lookup_API_Name__c}</p>
+                </div>
+              </lightning-card>
+            </lightning-layout-item>
+          </template>
+        </lightning-layout>
+      </template>
+      <template if:false={fieldMappings}>
+        <p>No custom metadata relationship fields found.</p>
+      </template>
+    </lightning-card>
+  </template>

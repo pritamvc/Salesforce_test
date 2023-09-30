@@ -1,0 +1,175 @@
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <div class={sectionClass}>
+        <lightning-accordion allow-multiple-sections-open class="title1" active-section-name="reference">
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="reference" label="Reference Details">
+                <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                    <tbody>
+                        <template for:each={listOfReferenceTable} for:item="rec">
+                            <!-- REFERENCE DETAILS -->
+                            <!-- Added by tushar : start -->                          
+                            <tr key={rec.Id}>
+                                <td style="font-weight: bold;">
+                                    <lightning-combobox name="applicantNamesReference" label="Applicant Name" value={rec.Account__c}
+                                        options={TypeOptions} onchange={handleTypeChange} data-id={rec.Id} required="true"> </lightning-combobox>
+                                </td>
+                            </tr>
+                            <!-- Added by tushar : end -->
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-input label="Reference First Name" name="Reference_First_Name__c"
+                                        value={rec.Reference_First_Name__c} type="text" data-id={rec.Id} pattern="[A-Za-z ]{1,40}"
+                                        message-when-pattern-mismatch="Please enter a valid first name"
+                                        onchange={handlechange} required="true">
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Reference Middle Name" name="Reference_Middle_Name__c"
+                                        value={rec.Reference_Middle_Name__c} type="text" data-id={rec.Id}
+                                        pattern="[A-Za-z ]{1,40}"
+                                        message-when-pattern-mismatch="Please enter a valid middle name" onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Reference Last Name" name="Reference_Last_Name__c"
+                                        value={rec.Reference_Last_Name__c} type="text" data-id={rec.Id}
+                                        pattern="[A-Za-z ]{1,40}"
+                                        message-when-pattern-mismatch="Please enter a valid last name" onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Mobile Number" name="Mobile_No__c"
+                                        value={rec.Mobile_No__c} pattern="[0-9]{10}$"
+                                        message-when-pattern-mismatch="Mobile number must contains 10 digits only"
+                                        required="true" type="tel" data-id={rec.Id} onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                            </tr>
+
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-input label="Email Id" name="Email_Id__c"
+                                        value={rec.Email_Id__c} type="email" data-id={rec.Id}
+                                        placeholder="username@example.com"
+                                        pattern="[A-Za-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$"
+                                        message-when-pattern-mismatch="Please enter a valid Email id"
+                                        onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Landline Number" name="Landline_No__c"
+                                        value={rec.Landline_No__c} type="tel" data-id={rec.Id}
+                                        onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Occupation" name="Occupation__c"
+                                        value={rec.Occupation__c} type="text" data-id={rec.Id}
+                                        pattern="[A-Za-z ]{1,40}"
+                                        message-when-pattern-mismatch="Please enter a valid occupation" onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                            </tr>
+                            <!-- Address Details -->
+                            <tr key={rec.Id}>
+                                <td colspan="4">
+                                    <div class="title-heading">Address Details</div>
+                                </td>
+                            </tr>
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-input label="Address 1" name="Reference_Address_1__c"
+                                        value={rec.Reference_Address_1__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange} required="true">
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Address 2" name="Reference_Address_2__c"
+                                        value={rec.Reference_Address_2__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Address 3" name="Reference_Address_3__c"
+                                        value={rec.Reference_Address_3__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                <lightning-record-edit-form object-api-name="Reference__c">
+                                <lightning-input-field field-name="Pin_Code__c"
+                                    value={rec.Pin_Code__c} name="Pin_Code__c"
+                                    onchange={handleRefPincode} data-id={rec.Id} required>
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                                </td>                                
+                            </tr>
+
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-input label="City" name="City__c"
+                                        value={rec.City__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange} disabled="true">
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="District/Taluka" name="District__c"
+                                        value={rec.District__c} type="text"
+                                        data-id={rec.Id} onchange={handlechange} disabled="true">
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="State" name="State__c"
+                                        value={rec.State__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange} disabled="true">
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input label="Country" name="Country__c"
+                                        value={rec.Country__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange} disabled="true">
+                                    </lightning-input>
+                                </td>
+                                
+                            </tr>
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-input label="Landmark" name="Landmark__c"
+                                        value={rec.Landmark__c} type="text" data-id={rec.Id}
+                                        onchange={handlechange}>
+                                    </lightning-input>
+                                </td>                                
+                            </tr>
+
+                            <!-- Add / Delete Buttons -->
+                            <tr key={rec.Id}>
+                                <td>
+                                    <lightning-icon icon-name="utility:add" size="small" title="Add Row" data-id={rec.Id}
+                                        alternative-text="Add Row"
+                                        onclick={addRowReference}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                    <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove" data-id={rec.Id}
+                                        title="Remove" onclick={removeRowReference}></lightning-icon>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </lightning-accordion-section>
+          
+            <lightning-card>
+                <lightning-button 
+                    class="button slds-align_absolute-center"
+                    label="Save"
+                    variant="brand"
+                    style="width: fit-content;"
+                    onclick={handleSaveReference}>
+                </lightning-button>
+            </lightning-card>
+        </lightning-accordion>
+    </div>
+</template>

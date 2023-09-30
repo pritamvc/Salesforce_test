@@ -1,0 +1,14 @@
+<template>
+    <lightning-card  title="Account Details 2  "  >
+      <h2>{recordId}</h2>
+        <lightning-input label="Name" value={Account_Name_Formula__c} onchange={handelNameChange} ></lightning-input>
+        <lightning-input label="Father First Name" value={Father_First_Name} onchange={handelFatherFirstNameChange} ></lightning-input>
+        <lightning-input label="Father Last Name" value={Father_Last_Name} onchange={handelFatherLastNameChange} ></lightning-input>
+        <lightning-input label="mobile" value={PersonMobilePhone} onchange={handelPhoneChange} ></lightning-input>
+
+       <div>
+        <lightning-button label="Save" variant="brand" onclick={handelsave}></lightning-button>
+    </div>
+    </lightning-card>
+
+</template>
