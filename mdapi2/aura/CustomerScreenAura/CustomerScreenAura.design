@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="applicantId" label="Applicant Id"></design:attribute>
+    <design:attribute name="dealId" label="Deal id"></design:attribute>
+    <design:attribute name="accountId" label="Account id"></design:attribute>
+    <design:attribute name="leadId" label="Lead id"></design:attribute>
+</design:component>

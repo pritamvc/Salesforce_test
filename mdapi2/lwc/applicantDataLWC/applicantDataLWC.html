@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="Applicant Data" variant="outlined">
+        <template if:true={applicantData}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Field Label</th>
+                        <th>Field Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={applicantData} for:item="data">
+                        <tr key={data.fieldLabel}>
+                            <td>{data.fieldLabel}</td>
+                            <td>{data.fieldValue}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+        <template if:false={applicantData}>
+            No applicant data found.
+        </template>
+    </lightning-card>
+</template>

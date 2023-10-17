@@ -1,0 +1,37 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-13-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div style="background: #EFEFEF; border-radius:4px;">
+        <div class="icon-bar">
+            <img src={applicant} alt="Applicant" title="Applicant"/>
+            <img src={loan} alt="loan"  title="Loan"/>
+            <img src={coapplicant} alt="Co-applicant"  title="Co-applicant"/>
+            <img src={graduation} alt="Education"  title="Education"/>
+            <img src={finance} alt="Finance"  title="Finance"/>
+            <img src={document} alt="Documents"  title="Documents"/>
+            
+          </div>
+          <!-- <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30"  role="progressbar"> -->
+            <!-- <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-label="Placeholder for description of progress bar" role="progressbar">
+            <span class="slds-progress-bar__value slds-progress-bar__value_success" style="width:100%; background-color:orange">
+            </span>
+             
+            </div> -->
+            <!--
+         <lightning-progress-bar value={percentageAll} size="large"  variant="circular"></lightning-progress-bar> 
+         
+            -->
+            <!-- <lightning-progress-bar value={leadFormWeightage} size="large"  variant="circular"></lightning-progress-bar>
+         <div class='slds-align_absolute-center'>{leadFormWeightage}%</div> -->
+       
+        <lightning-progress-bar value={publisherMessage} size="large"  variant="circular"></lightning-progress-bar>
+        <div class='slds-align_absolute-center'>{publisherMessage}%</div>
+  
+       
+    </div>
+  </template>

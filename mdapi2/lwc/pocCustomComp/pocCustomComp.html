@@ -1,0 +1,13 @@
+<template>   
+    <template if:false={fileUploaded}>
+    <lightning-input type="file"
+                           name="fileUploader"
+                           accept={acceptedFormats}
+                           record-id={recordId}
+                           onchange={openfileUpload}>
+    </lightning-input>    
+    </template>
+    <template if:true={fileUploaded}>
+        No Action Required    
+</template>
+</template>

@@ -1,0 +1,140 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 08-03-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <div class={sectionClass}>
+        <lightning-accordion allow-multiple-sections-open active-section-name="costofcourse" class="title1">
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="costofcourse"
+                label="Cost of Education">
+                <div class="slds-grid slds-wrap">
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <template if:true={RepaymentOption.data}>
+                            <lightning-combobox variant="label-standard" label="Repayment Option"
+                                name="Repayment_Option__c" value={repaymentvalue} options={RepaymentOption.data.values}
+                                required="true" onchange={handlechangeLoan}>
+                            </lightning-combobox>
+                        </template>
+                    </div>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Loan Tenure (Months)" name="Loan Tenure (Months)"
+                            value={loanTenure} max-length="3" type="number" onchange={handlechangeLoan} required="true">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Expected Tuition Fees" name="ExpectedTuitionFees"
+                            value={loanExpecTuitionFees} type="number" pattern="[1-9][0-9]*"
+                            message-when-pattern-mismatch="Please enter valid amount" onchange={handlechangeLoan}
+                            onblur={total} required="true">
+                        </lightning-input>
+                    </div>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Living Expenses/Hostel and Food" name="Living Expenses/Hostel and Food"
+                            pattern="[1-9][0-9]*" message-when-pattern-mismatch="Please enter valid amount"
+                            value={loanLivExpHostelFoodExp} onblur={total} type="number" onchange={handlechangeLoan}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Travelling Expenses" name="Travelling Expenses" onblur={total}
+                            value={loanTravelExp} type="number" pattern="[1-9][0-9]*"
+                            message-when-pattern-mismatch="Please enter valid amount" onchange={handlechangeLoan}>
+                        </lightning-input>
+                    </div>
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Others" name="Others" value={loanOtherCost} pattern="[1-9][0-9]*"
+                            message-when-pattern-mismatch="Please enter valid amount" type="number" onblur={total}
+                            onchange={handlechangeLoan}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div
+                        class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                        <lightning-input label="Total Cost (Sum of above)" name="Total Cost (Sum of above)"
+                            value={loanTotalCostSum} type="number" onchange={handlechangeLoan} disabled="true">
+                        </lightning-input>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="funds"
+                label="Funds Available">
+                <div>
+                    <div class="slds-grid slds-wrap">
+                        <div
+                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                            <lightning-input label="Own Source" name="Own Source" value={loanOwnSource}
+                                pattern="[1-9][0-9]*" message-when-pattern-mismatch="Please enter valid amount"
+                                type="number" onchange={handlechangeFund}>
+                            </lightning-input>
+                        </div>
+                        <div
+                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                            <lightning-input label="Scholarship" name="Scholarship" value={loanScholarship}
+                                pattern="[1-9][0-9]*" message-when-pattern-mismatch="Please enter valid amount"
+                                type="number" onchange={handlechangeFund}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div
+                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                            <lightning-input label="Other Funds" name="Other Funds" value={loanOtherFunds}
+                                pattern="[1-9][0-9]*" message-when-pattern-mismatch="Please enter valid amount"
+                                type="number" onchange={handlechangeFund}>
+                            </lightning-input>
+                        </div>
+                        <div
+                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                            <lightning-input label="Total Fund (Sum of above)" name="Total Fund (Sum of above)"
+                                value={loanTotalFunndsSum} type="number" onchange={handlechangeFund} disabled="true">
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div
+                            class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4 slds-p-around_small">
+                            <lightning-input label="Loan Required" name="Loan Required (A-B)" value={loanLoanRequiredAB}
+                                type="number" required="true" onchange={handlechangeLoan} disabled="true">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-card>
+                <lightning-layout multiple-rows horizontal-align="center">
+                    <lightning-layout-item>
+                        <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                            label="Save as draft" variant="brand" onclick={handleSaveLeadLoan}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="auto">
+                        <div style="margin-left: 10px;">
+                            <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                                label="Save and Next" variant="brand" onclick={handleNextLeadLoan}>
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+        </lightning-accordion>
+    </div>
+</template>

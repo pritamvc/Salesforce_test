@@ -1,0 +1,14 @@
+<apex:page standardController="Co_Applicant__c" extensions="ApplicantPDFGenerator" renderAs="pdf">
+    <apex:pageMessages />
+    <apex:sectionHeader title="Applicant PDF" subtitle="Generated on: {!NOW()}" />
+    <apex:form >
+        <!-- Add your desired layout and fields here -->
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="2" title="Applicant Information">
+                <apex:outputField value="{!Co_Applicant__c.Name}" />
+                <apex:outputField value="{!Co_Applicant__c.Email__c}" />
+                <!-- Add more fields as needed -->
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

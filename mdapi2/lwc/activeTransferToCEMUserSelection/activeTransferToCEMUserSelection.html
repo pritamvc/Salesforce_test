@@ -1,0 +1,30 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-26-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:true={checkServiceBranch}>
+        <lightning-input label="Service Branch Name" name="serviceBranch" value={serviceBranch} options={serviceBranchOptions}
+        onchange={handleServiceBranchChange} disabled="true" ></lightning-input>
+        <template if:true={checkUser}>
+            <lightning-combobox label="Service Branch User" name="serviceBranchUser" onchange={handleServiceBranchChange} options={usersForSelectionOption}>
+            </lightning-combobox>
+            <div class="slds-m-top_large slds-grid slds-grid_align-right slds-align–absolute-right">
+                <lightning-button label="Submit" onclick={handleSubmit} class="align-right" variant="brand"></lightning-button>
+            </div>
+        </template>
+        <template if:false={checkUser}>
+            <div class="centered-message-container">
+                <h1>{noUsersMessage}</h1>
+            </div>
+        </template>
+    </template>
+    <template if:false={checkServiceBranch}>
+        <div class="centered-message-container">
+            <h1>{noServiceBranchMessage}</h1>
+        </div>
+    </template>
+</template>

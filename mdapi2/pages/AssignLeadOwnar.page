@@ -1,0 +1,50 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" standardController="Lead" recordSetVar="accs" extensions="MassLeadOwnerAssignmentBasedOnQueue">
+    <apex:includeScript value="/soap/ajax/18.0/connection.js"/>
+    <style type="text/css">
+        .popup-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.4); /* Transparent background */
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .popup-content {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+    </style>
+    <div class="popup-container">
+        <div class="popup-content">
+            <h1>Hello, World!</h1>
+            <p>This is a sample popup message.</p>
+     
+    <script>
+        function startFlow() {
+            console.log("Starting the flow...");
+            var flowApi = new Sfdc.Flow.Interview.FlowInterviewService();
+            var flowName = "Harsh_Assign_Sales_User_To_Lead"; // Replace with the actual Screen Flow API name
+
+            flowApi.startFlow(flowName, null, function(result) {
+                if (result.isSuccess()) {
+                    // Flow started successfully
+                    console.log("Flow started successfully.");
+                } else {
+                    // Handle flow start error
+                    console.error("Error starting flow: " + result.getError());
+                }
+
+                // Close the popup
+                sforce.one.back(true);
+            });
+        }
+
+        // Automatically start the flow when the page is loaded
+        console.log("Page loaded. Starting the flow...");
+        startFlow();
+    </script>
+               </div>
+    </div>
+</apex:page>

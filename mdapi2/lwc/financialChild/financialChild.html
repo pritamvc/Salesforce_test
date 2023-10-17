@@ -1,0 +1,253 @@
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    
+        <div class={sectionClass}>     
+            <lightning-accordion allow-multiple-sections-open active-section-name="financial" class="title1">
+                <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="financial" label="Bank Account Details">
+                    <table class="slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                                <template for:each={listOfFinancialTable} for:item="rec">
+        
+                                    <!-- FINANCIAL DETAILS -->
+                                    <tr key={rec.Id}>
+                                        <td style="font-weight: bold;">
+                                             <!--<lightning-input label="Applicant Name" name="" value='' type="text" data-id={rec.index}
+                                                    required="true" onchange={handlechange}>
+                                                </lightning-input> -->
+                                            <lightning-combobox name="applicantNames" label="Applicant Name" value={rec.Account__c}
+                                                options={TypeOptions} onchange={handleChangeNameBank} data-id={rec.Id} required="true"> </lightning-combobox>
+                                        </td>
+                                        <td></td><td></td><td></td>
+                                    </tr>
+        
+                                    <tr key={rec.Id}>
+                                        <td>
+                                            <lightning-input label="Account Holder Name" name="Account_Holder_Name__c"
+                                                value={rec.Account_Holder_Name__c} type="text" data-id={rec.Id}
+                                                required="true" onchange={handleChangeFinancial} pattern="[A-Za-z ]{1,50}" message-when-pattern-mismatch="Please enter a valid name">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <!--Changes in Branch lookup-->
+                                            <lightning-record-edit-form object-api-name="Bank_Details__c">
+                                                <lightning-input-field field-name="Name_of_Bank__c"
+                                                     name="appliBank" data-id={rec.Id} value={rec.Name_of_Bank__c} onchange={handleChangeFinancial}
+                                                     required>
+                                                </lightning-input-field>
+                                            </lightning-record-edit-form></td>
+                                        <td>
+                                            <!--Changes in branch lookup-->
+                                            <!-- <lightning-record-edit-form object-api-name="Bank_Details__c">
+                                                <lightning-input-field field-name="Bank_Branch_IFSC__c" label="Branch"
+                                                     name="appliBranch" data-id={rec.Id} value={rec.Bank_Branch_IFSC__c}
+                                                    onchange={handleBranchSelection} required>
+                                                </lightning-input-field>
+                                            </lightning-record-edit-form> -->
+                                            <template if:false={rec.selectedBankId}>
+                                                <lightning-input label="Bank Branch" type="search" placeholder="Search Branches..">
+                                                </lightning-input>
+                                            </template>
+
+                                            <template if:true={rec.selectedBankId}>
+                                                <c-branch-custom-lookup label="Bank Branch" placeholder="Search Branches.." value={rec.selectedValue} object-api-name="Bank_Details__c"
+                                                    field-api-name="Bank_Branch_IFSC__c" bank-id={rec.selectedBankId} onselect={handleSelection} data-id={rec.Id}></c-branch-custom-lookup>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="IFSC Code" name="IFSC_Code__c" value={rec.IFSC_Code__c}
+                                                type="text" data-id={rec.Id} required="true" onchange={handleChangeFinancial} disabled="true">
+                                            </lightning-input>
+                                        </td> 
+                                    </tr>
+        
+                                    <tr key={rec.Id}>
+                                        <td>
+                                            <lightning-input label="MICR Code" name="MICR_Code__c" value={rec.MICR_Code__c}
+                                                type="text" data-id={rec.Id} required="true" onchange={handleChangeFinancial} disabled="true">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Account Number" name="Account_Number__c"
+                                                value={rec.Account_Number__c} type="text" data-id={rec.Id} required="true"
+                                                onchange={handleChangeFinancial} pattern="[0-9]{9,18}" message-when-pattern-mismatch="Please enter a valid account number">
+                                            </lightning-input>
+                                        </td>
+                                        <td><template if:true={TypePicklistValues.data}>
+                                            <lightning-combobox variant="label-standard" label="Account Type"
+                                                data-id={rec.Id} name="Account_Type__c" options={TypePicklistValues.data.values}
+                                                value={rec.Account_Type__c} required="true" onchange={handleChangeFinancial}>
+                                            </lightning-combobox></template>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Account Operational Since" name="Account_Operational_Since__c"
+                                                value={rec.Account_Operational_Since__c} type="date" data-id={rec.Id}
+                                                onchange={handleChangeFinancial} max={todaysDate}>
+                                            </lightning-input>
+                                        </td>
+                                        
+                                        
+                                        
+                                    </tr>
+        
+                                    <!-- Add / Delete Buttons -->
+                                    <tr key={rec.Id}>
+                                        <td>
+                                            <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                                alternative-text="Add Row"
+                                                onclick={addNewRowFinancial}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                            <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove"
+                                                title="Remove" name={rec.Id} data-id={rec.Id}
+                                                onclick={removeTheRowFinancial}></lightning-icon>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+           
+        </div>
+        <lightning-accordion allow-multiple-sections-open class="title1">
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="AssetDetails" label="Asset Details">
+                
+                <div class="docs-codeblock-example">
+                    <table class="slds-table newclass slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfAssetTable} for:item="rec">
+                                <tr key={rec.Id}>
+                                    <td style="font-weight: bold;">
+                                        <lightning-combobox name="applicantNameAsset" label="Applicant Name" value={rec.AccountId}
+                                            options={TypeOptionsAsset} onchange={handleChangeNameAsset} data-id={rec.Id}>
+                                        </lightning-combobox>
+                                    </td>
+                                    <td></td><td></td><td></td>
+                                </tr>
+        
+                                <tr key={rec.Id}>
+                                        <td><template if:true={AssetTypePerAccOptions.data}>
+                                            <lightning-combobox variant="label-standard" label="Asset Type"
+                                                data-id={rec.Id} name="Asset_Type__c" options={AssetTypePerAccOptions.data.values}
+                                                value={rec.Asset_Type__c} onchange={handlechangeAsset}>
+                                            </lightning-combobox></template>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Asset Value" name="Asset_Value__c"
+                                                value={rec.Asset_Value__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeAsset} pattern="[0-9]{1,10}" message-when-pattern-mismatch="Please enter a valid number">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Asset Description" name="Asset_Description__c"
+                                                value={rec.Description} type="text" data-id={rec.Id}
+                                                onchange={handlechangeAsset} pattern="[A-Za-z ]{1,100}" message-when-pattern-mismatch="Please enter a valid description">
+                                            </lightning-input>
+                                        </td>
+                                </tr>
+        
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                            alternative-text="Add Row"
+                                            onclick={addNewRowAsset}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove" data-id={rec.Id}
+                                            title="Remove" name={rec.Id} onclick={removeTheRowAsset}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section class="slds-col slds-size_4-of-4 slds-p-around_small" name="LiabilitiesDetails" label="Liabilities Details">
+                <div class="docs-codeblock-example">
+                    <table class=" newclass slds-table slds-no-row-hover slds-table_cell-buffer" role="grid">
+                        <tbody>
+                            <template for:each={listOfLiabilitiesTable} for:item="rec">
+                                <tr key={rec.Id}>
+                                    <td style="font-weight: bold;">
+                                        <lightning-combobox name="applicantNameLiabilities" label="Applicant Name" value={rec.Account__c}
+                                            options={TypeOptionsAsset} onchange={handleChangeNameLiability} data-id={rec.Id}>
+                                        </lightning-combobox>
+                                    </td>
+                                    <td></td><td></td><td></td>
+                                </tr>
+        
+                                <tr key={rec.Id}>
+                                    <!--<template if:true={ShowFieldsapplicantNameLiabilitiesIsIncome}>-->
+                                        <td>
+                                            <template if:true={LoanTypePerAccOptions.data}>
+                                            <lightning-combobox variant="label-standard" label="Loan Type"
+                                                data-id={rec.Id} name="Loan_Type__c" options={LoanTypePerAccOptions.data.values}
+                                                value={rec.Loan_Type__c} onblur={handlechangeLiability}>
+                                            </lightning-combobox></template>
+                                        </td><td></td><td></td><td></td>
+                                        </tr>
+                                        <tr key={rec.Id}>
+                                        <td>
+                                            <lightning-input label="Monthly Installment" name="Monthly_Installment__c"
+                                                value={rec.Monthly_Installment__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeLiability} pattern="[0-9]{1,7}" message-when-pattern-mismatch="Please enter a valid monthly installment">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Balance Tenure in Month" name="Balance_Tenure_In_Months__c"
+                                                value={rec.Balance_Tenure_In_Months__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeLiability} pattern="[0-9]{1,50}" message-when-pattern-mismatch="Please enter a valid balance tenure">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input label="Outstanding Amount" name="Outstanding_Amount__c"
+                                                value={rec.Outstanding_Amount__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeLiability} pattern="[0-9]{1,10}" message-when-pattern-mismatch="Please enter a valid amount">
+                                            </lightning-input>
+                                        </td>
+                                    
+                                        <td>
+                                            <lightning-input label="Original Amount" name="Original_Amount__c"
+                                                value={rec.Original_Amount__c} type="number" data-id={rec.Id}
+                                                onchange={handlechangeLiability} pattern="[0-9]{1,10}" message-when-pattern-mismatch="Please enter a valid amount">
+                                            </lightning-input>
+                                        </td>
+                                </tr>
+        
+                                <!-- Add / Delete Buttons -->
+                                <tr key={rec.Id}>
+                                    <td>
+                                        <lightning-icon icon-name="utility:add" size="small" title="Add Row"
+                                            alternative-text="Add Row"
+                                            onclick={addNewRowLiabilities}></lightning-icon>&nbsp;&nbsp;&nbsp;
+                                        <lightning-icon icon-name="utility:delete" size="small" alternative-text="Remove" data-id={rec.Id}
+                                            title="Remove" name={rec.Id} onclick={removeTheRowLiabilities}></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-accordion-section>
+    
+            <lightning-card>
+                <lightning-layout multiple-rows horizontal-align="center">
+                    <lightning-layout-item>
+                        <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                            label="Save as draft" variant="brand" onclick={handleSaveAsDraftFinancial}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="auto">
+                        <div style="margin-left: 10px;">
+                            <lightning-button class="button slds-align_absolute-center" style="width: fit-content;"
+                                label="Next" variant="brand" onclick={handleSaveNextFinancial}>
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+                </lightning-card>
+        </lightning-accordion>
+    
+</template>

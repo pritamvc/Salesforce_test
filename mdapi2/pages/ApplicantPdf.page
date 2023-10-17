@@ -1,0 +1,11 @@
+<apex:page Controller="ApplicantPdf">
+    
+       <apex:form >
+       
+       <apex:repeat value="{!allFieldName}" var="key"> 
+             <apex:outputLabel value="{!key}" />-  <apex:outputLabel value="{!sobj[key]}" />   
+           <br/>
+       </apex:repeat>
+        
+    </apex:form>
+</apex:page>

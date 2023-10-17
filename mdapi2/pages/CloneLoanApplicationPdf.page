@@ -1,0 +1,1881 @@
+<apex:page standardController="Lead" extensions="ApplicantPDFGeneratorClone" renderAs="pdf"  applyHtmlTag="false" showHeader="false" standardStylesheets="false" >
+    <html>
+        <head>          
+            <style type="text/css" media="print">
+                @page {
+            size: auto; /* Set the page size to auto */
+            margin: 10mm; /* Set the page margin as needed */
+        }
+                table, th, td {
+                border-collapse: collapse;
+                } 
+                 table {
+            
+            page-break-inside: avoid; /* Avoid page breaks within the table */
+        }
+                  body {
+            font-family: Calibri; /* Set the default font-family for the form */
+        }
+        .auto-line-break {
+            white-space: pre-wrap;
+        }
+    
+           </style>
+        </head>
+        <body>
+            <div class="header">
+                <table style="width:100%">    
+                    <div style="text-align:center;">
+                        <class style="text-align:center;">
+                            <img src="{!URLFOR($Resource.Auxilologo)}" alt="Logo" style="width: 150px; height: auto;" />
+                        </class>
+                    </div> 
+                    <div style="text-align:center;">
+                        <class style="text-align:center;font-weight: bold;font-size: 13px;">Auxilo Finserve Pvt. Ltd. Office No. 63, 6th floor, Kalpataru Square, Kondivita Road, Andheri East, Mumbai 400059</class>
+                    </div> 
+                   
+                </table>
+            </div>
+        </body>
+    <table  width="100%">             
+    </table>
+      
+        <table border="2" width="100%" style="border: 1px solid black;">
+            
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#C55A11;font-size: 16px;color: white;" align="center">Applicant Detail</th>  
+            </tr>
+            </table>
+            <br/>
+<table border="2" width="100%" style="border: 1px solid black;">
+  
+    <apex:repeat var="applicant" value="{!applicantrecd}">
+      
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="30%" align="left">Application Form ID:</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!applicant.Name}</td>                
+            </tr>
+        </apex:repeat>
+        <apex:repeat value="{!filesDownloadURL}" var="url" id="leadid">
+        <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="30%" align="left">Photo:</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left"><img src="{!url}" width="100" height="100"/></td>                
+            </tr>
+                </apex:repeat>
+            </table>
+        <br/>
+    <table border="2" width="100%" style="border: 1px solid black;">
+        <apex:repeat var="applicant" value="{!applicantrecd}">
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">Basic Details</th>  
+            </tr>
+   
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Salutation</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!applicant.Account__r.Salutation}</td>                
+            </tr>
+        
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!applicant.Account__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">First Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!applicant.Account__r.FirstName}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Middle Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.MiddleName}</td>                
+            </tr>
+         <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Last Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.LastName}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Email </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Email__c}</td>                
+            </tr>
+        
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Gender </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Gender__c}</td>                
+            </tr>
+
+        <tr >
+             
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;"> Income Considered/Is Financial</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Is_Income_Considered_Financial__c}</td>                
+          
+            </tr>
+        
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Marital status </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Marital_Status__c}</td>                
+            </tr>
+            </apex:repeat> 
+             <apex:repeat var="demographydata" value="{!demography}">
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Father's First Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!demographydata.Father_s_First_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Father's Middle Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!demographydata.Father_s_Middle_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Father's Last Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!demographydata.Father_s_Last_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Mother's First Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!demographydata.Mother_s_First_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Mother's Middle Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!demographydata.Mother_s_Middle_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Mother's Last Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!demographydata.Father_s_Last_Name__c}</td>                
+            </tr>
+   </apex:repeat>
+    </table>  
+        <br/>   
+          <table border="2" width="100%" style="border: 1px solid black;">
+               <apex:repeat var="applicant" value="{!applicantrecd}">
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">KYC</th>  
+            </tr>
+
+             <tr >
+        
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Date of Birth: </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!applicant.Account__r.Date_of_Birth__c}" />
+        </apex:outputText></td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Aadhaar Number </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Aadhar_Number__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">PAN Number  </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.PAN_Number__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Passport Number </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Passport_Number__c}</td>                
+            </tr>
+       
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Passport File Number </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Passport_File_Number__c}</td>                
+            </tr>
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Voter ID</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.Voter_ID__c}</td>                
+            </tr>
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">CKYC Number</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.CKYC_Number__c}</td>                
+            </tr>
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">NREG Number</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!applicant.Account__r.NREG_Number__c}</td>                
+            </tr>
+              
+ </apex:repeat>
+    </table>  
+        <br/> 
+        
+              <table border="2" width="100%" style="border: 1px solid black;">
+                   <apex:repeat var="addressCurrentdata" value="{!addressCurrent}">
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">Applicant Current Address</th>  
+            </tr>
+
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Address Proof </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!addressCurrentdata.Address_Proof__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Current Address </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.Address_1__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressCurrentdata.Landmark__c}</td>                
+            </tr>
+                 
+                  
+                    </apex:repeat>
+ 
+    </table>  
+        <br/>
+    
+              <table border="2" width="100%" style="border: 1px solid black;">
+                  <apex:repeat var="addressPermtdata" value="{!addressPermt}">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Applicant Permanent Address</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Same as Current Address </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!addressPermtdata.Same_as_Current_Address__c}</td>                
+            </tr>
+
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Address Proof</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Address_Proof__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Current Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Address_1__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Landmark__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Years in Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Years_In_The_Address__c}</td>                
+            </tr>
+                  
+                 <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Is Communication Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!addressPermtdata.Is_Communication_address__c}</td>                
+            </tr>
+                  
+                        </apex:repeat>
+                   </table>
+                   <br/> <br/><br/>
+        <br/>   
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Financial</th>  
+            </tr>
+                  </table>
+        <br/>
+        <apex:repeat var="bankaccntdata" value="{!BankAccountrecrd}"> 
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Bank Account Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!bankaccntdata.Account__r.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Holder Name </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Account_Holder_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Name of Bank </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Bank_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Bank Branch </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Bank_Branch_IFSC__r.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">IFSC Code </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.IFSC_Code__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">MICR Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.MICR_Code__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Account_Number__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Type</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Account_Type__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Operational Since</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!bankaccntdata.Account_Operational_Since__c}" />
+        </apex:outputText> </td>                
+            </tr>
+        </table>
+            <br/>
+        </apex:repeat>
+                <br/>
+          <apex:repeat var="Assetrecrddate" value="{!Assetrecrd}"> 
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Asset Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Assetrecrddate.Account.Name}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Asset Type </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Assetrecrddate.Asset_Type__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Asset Value </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Assetrecrddate.Asset_Value__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Asset Description </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Assetrecrddate.Description}</td>                
+            </tr>
+            
+        </table>
+              <br/>
+        </apex:repeat>
+        <br/>
+          <apex:repeat var="Liabilityrecrddata" value="{!Liabilityrecrd}">
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Liabilities Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Account__r.Name}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Loan Type </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Loan_Type__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Monthly Installment </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Monthly_Installment__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Balance Tenure in Month </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Balance_Tenure_In_Months__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Outstanding Amount </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Outstanding_Amount__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Original Amount </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Original_Amount__c}</td>                
+            </tr>
+        </table>
+              <br/>
+        </apex:repeat>
+              <br/>
+         
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Collateral</th>  
+            </tr>
+                  </table>
+      
+              <br/>
+        <apex:repeat var="Collateralrecrddata" value="{!Collateralrecrd}">
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Collateral Details</th>  
+                  </tr>
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-weight: Bold;font-size: 11px;font-weight: bold;" width="30%" align="left">Security Offered:</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Collateralrecrddata.Security_Offered__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Property Owned By</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Collateralrecrddata.Account.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Collateral Type</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" >{!Collateralrecrddata.Collateral_Type__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Collateral Value</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" >{!Collateralrecrddata.Asset_Value__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Area in SQ.FT</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Area_Sq_Ft__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Local Authority</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Local_Authority__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Property Details</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"></td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Building/House Name</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Building_House_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Building/House Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Building_House_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">Wing</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">{!Collateralrecrddata.Wing__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Floor</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Floor__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Survey/Plot No</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Survey_Plot_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Pin_Code__r.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.City__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Area_Taluka_District_Area_name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.State__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Country__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Landmark__c}</td>                
+            </tr>
+            </table>
+            <br/>
+        </apex:repeat>     
+        <br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Reference</th>  
+            </tr>
+                  </table>
+        <br/>
+        <apex:repeat var="referencrrecrdddata" value="{!referencrrecrd}">
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Reference</th>  
+                  </tr>
+            
+            <tr >
+                
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Reference First Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!referencrrecrdddata.Reference_First_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Reference Middle Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Middle_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Reference Last Name </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Last_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Mobile Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Mobile_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Email ID</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Email_Id__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landline Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Landline_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Occupation</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Occupation__c}</td>                
+            </tr>
+            
+            </table>
+            <br/>
+        
+        <br/><br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">Address Details</th>  
+            </tr>
+
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Address1 </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!referencrrecrdddata.Reference_Address_1__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Address 2</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Address_2__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Address 3</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Address_3__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Landmark__c}</td>                
+            </tr>
+
+    </table>  
+            
+                <br/>
+        </apex:repeat>
+                  <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Loan Requirement</th>  
+            </tr>
+                  </table>
+                  <br/> 
+        
+                 <apex:repeat var="Leaddetailsdata" value="{!Leadrecord}">
+                  <table border="2" width="100%" style="border: 1px solid black;">
+                    
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Cost Of Education</th>  
+            </tr>
+
+        <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Tuition Fees:</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Leaddetailsdata.Tuition_Fees__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Living Expenses</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Living_Hostel_Food_Expenses__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Others</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Other_Costs__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Total</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Total_Costs__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Own Source</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Own_Source__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Scholarship</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Scholarship__c}</td>                
+            </tr>
+                
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Required Loan Amount </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Loan_Required_A_B__c}</td>                
+            </tr>
+                 
+  
+    </table>
+        </apex:repeat>
+        <br/>
+          <apex:repeat var="Leaddetailsdata" value="{!Leadrecord}">
+                  <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Funds Available</th>  
+            </tr>
+
+        <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Own Source</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Leaddetailsdata.Own_Source__c}</td>                
+            </tr>
+                      <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Scholarship</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Leaddetailsdata.Scholarship__c}</td>                
+            </tr>
+                      <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Other Funds</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Others_Fund__c}</td>                
+            </tr>
+                      <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Total Funds(Sum of above)</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Total_Funds__c}</td>                
+            </tr>
+                      <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Loan Required</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Loan_Required_A_B__c}</td>                
+            </tr>
+            </table>       
+                 
+   
+         <br/> <br/>  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Course And Academics</th>  
+            </tr>
+        </table>
+
+       <br/>
+         
+              <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Course Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Country of Study</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Leaddetailsdata.Country_of_Study__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Admission Status</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Admission_Status__c}</td>                
+            </tr>
+
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Institute</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Institute_Name__r.Name}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">University</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.University_Name__r.Name}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Campus</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Campus__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11pxfont-weight: bold;">Course Category</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Course_Category__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Type:</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Course_Type__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Name</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Course_Name_Lookup__c}</td>                
+            </tr>
+                
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Stream</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Course_Stream__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Start Date</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!Leaddetailsdata.Course_Start_Date__c}" />
+        </apex:outputText></td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course End Date</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!Leaddetailsdata.Course_End_Date__c}" />
+        </apex:outputText></td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Language Score Category</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Language_Score_Category__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Language Test Score</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Language_Test_Score__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Analytics Score Category</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Analytics_Score_Category__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Analytical Test Score</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Analytics_Test_Score__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Qunatitative Score</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Quantitative_Score__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Verbal Score</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Leaddetailsdata.Verbal_Score__c}</td>                
+            </tr>
+  
+    </table>
+              <br/>
+        </apex:repeat>
+   <br/>  
+              <table border="2" width="100%" style="border: 1px solid black;">
+                  
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Education</th>  
+                  </tr>
+       <apex:repeat var="educationrecrdsdata" value="{!educationrecrds}">
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Education Qualification</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!educationrecrdsdata.Education_Qualification__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;font-weight: bold;">Percentage</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;">{!educationrecrdsdata.Percentage_Marks_CGPA__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;font-weight: bold;">CGPA</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;">{!educationrecrdsdata.CGPA__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;font-weight: bold;">School/College</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;">{!educationrecrdsdata.School_College_University__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">University Name</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;">{!educationrecrdsdata.University_Name__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Name</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;">{!educationrecrdsdata.Course_Name__c}</td>                
+            </tr>
+                
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Stream</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;">{!educationrecrdsdata.Course_Stream__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course Start Date</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!educationrecrdsdata.Course_Start_Date__c}" />
+        </apex:outputText></td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Course End Date</td>  
+                <td style="padding-left: 5px;
+                padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!educationrecrdsdata.Year_Completed__c}" />
+        </apex:outputText></td>                
+            </tr>
+           </apex:repeat>
+     </table>
+             <br/>
+     
+        <br/>   
+        
+       <apex:repeat var="coapplicandata" value="{!coapplicantrecd}"> 
+        <table border="2" width="100%" style="border: 1px solid black;">
+            
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">CO-Applicant/Guarantor</th>  
+            </tr>
+        </table>
+        
+           <br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+               <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">KYC</th>  
+            </tr>
+
+             <tr >
+        
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Date of Birth: </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left"> <apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!coapplicandata.Account__r.Date_of_Birth__c}" />
+        </apex:outputText></td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Aadhaar Number   </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Aadhar_Number__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">PAN Number  </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.PAN_Number__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Passport Number </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Passport_Number__c}</td>                
+            </tr>
+       
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Passport File Number </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Passport_File_Number__c}</td>                
+            </tr>
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Voter ID</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Voter_ID__c}</td>                
+            </tr>
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">CKYC Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.CKYC_Number__c}</td>                
+            </tr>
+              <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">NREG Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.NREG_Number__c}</td>                
+            </tr>
+              
+    </table>  
+      
+        <br/>
+           
+        <table border="2" width="100%" style="border: 1px solid black;">
+                   <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">Basic Details</th>  
+            </tr>
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Type:</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!coapplicandata.Type__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;">Relationship Proof</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Relationship_Proof__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;">Relation with applicant</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Relation_with_applicant__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;">Is Income Considered Financial</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Is_Income_Considered_Financial__c}</td>                
+            </tr>
+        
+        <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;">First Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.FirstName}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Middle Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.MiddleName}</td>                
+            </tr>
+         <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Last Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.LastName}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Email  </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Email__c}</td>                
+            </tr>
+        
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Gender  </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Gender__c}</td>                
+            </tr>
+
+        <tr >
+             
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;"> Income Considered/Is Financial</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Is_Income_Considered_Financial__c}</td>                
+          
+            </tr>
+        
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Marital Status  </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!coapplicandata.Account__r.Marital_Status__c}</td>                
+            </tr>
+        
+   
+    </table>  
+        <br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+             <apex:repeat var="coaddressCurrentdata" value="{!CoaddressCurrent}">
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">Current Address Details</th>  
+            </tr>
+
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Address Proof: </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!coaddressCurrentdata.Address_Proof__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Current Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.Address_1__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.Landmark__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Years in Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!coaddressCurrentdata.Years_In_The_Address__c}</td>                
+            </tr>
+            </apex:repeat>     
+ 
+    </table>  
+        <br/>
+          <table border="2" width="100%" style="border: 1px solid black;">
+              <apex:repeat var="CoaddressPermtdata" value="{!CoaddressPermt}">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Permanent Adress</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Same as Current Address </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!CoaddressPermtdata.Same_as_Current_Address__c}</td>                
+            </tr>
+
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Address Proof </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Address_Proof__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Current Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Address_1__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Landmark__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Years in Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Years_In_The_Address__c}</td>                
+            </tr>
+                  
+                 <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Is Communication Address</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!CoaddressPermtdata.Is_Communication_address__c}</td>                
+            </tr>
+                 
+
+                  </apex:repeat>
+                   </table>
+           <br/>
+           </apex:repeat>
+             <br/><br/> <br/> <br/>  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+             
+       <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Employment And Business</th>  
+            </tr>
+                  </table>
+    <br/>
+           <apex:repeat var="Employmentdata" value="{!Employmentrecrd}"> 
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 11px;background:#F4B083;" align="center"> Employment</th>  
+            </tr>
+                 <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Employmentdata.Account__r.Name}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Employment Type</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Employment_Type__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Date of Retirement</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!Employmentdata.Date_of_Retirement__c}" />
+        </apex:outputText></td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Organisation Name</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Name_Of_The_Company__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Nature of Professional</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Nature_of_Professional__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Membership Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Membership_Number__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">GST IN</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.GST_IN__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pension Amount</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Pension_Amount__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Type Of the Company</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Type_Of_Company__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Role in Organization</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Role_In_Organization__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Official Email Id</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Official_Email_Id__c}</td>                
+            </tr>
+           
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Monthly Income</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Monthly_Income__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">No.of Years with Current Employer</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.No_of_Years_with_Current_Employer__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Total Professional Experience</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Employmentdata.Total_Professional_Experience__c}</td>                
+            </tr>
+            
+            
+                </table>
+               <br/>
+        </apex:repeat>
+        <br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+             <apex:repeat var="officeaddressdata" value="{!officeaddress}">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Office Address Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Office Address </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!officeaddressdata.Address_1__c}</td>                
+            </tr>
+
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!officeaddressdata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!officeaddressdata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!officeaddressdata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!officeaddressdata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!officeaddressdata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!officeaddressdata.Landmark__c}</td>                
+            </tr>
+               </apex:repeat>
+        </table>   
+       <br/>   
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Financial</th>  
+            </tr>
+                  </table>
+        <br/>
+        <apex:repeat var="bankaccntdata" value="{!BankAccountrecrd}"> 
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Bank Account Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!bankaccntdata.Account__r.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Holder Name </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Account_Holder_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Name of Bank </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Bank_Name__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Bank Branch </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Bank_Branch_IFSC__r.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">IFSC Code </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.IFSC_Code__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">MICR Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.MICR_Code__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Account_Number__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Type</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!bankaccntdata.Account_Type__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Account Operational Since</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"><apex:outputText value="{0,date,dd-MM-yyyy}">
+            <apex:param value="{!bankaccntdata.Account_Operational_Since__c}" />
+        </apex:outputText> </td>                
+            </tr>
+        </table>
+            <br/>
+        </apex:repeat>
+                <br/>
+          <apex:repeat var="Assetrecrddate" value="{!Assetrecrd}"> 
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Asset Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Assetrecrddate.Account.Name}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Asset Type </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Assetrecrddate.Asset_Type__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Asset Value </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Assetrecrddate.Asset_Value__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Asset Description </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Assetrecrddate.Description}</td>                
+            </tr>
+            
+        </table>
+              <br/>
+        </apex:repeat>
+        <br/>
+          <apex:repeat var="Liabilityrecrddata" value="{!Liabilityrecrd}">
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center"> Liabilities Details</th>  
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Applicant Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Account__r.Name}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Loan Type </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Loan_Type__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Monthly Installment </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Monthly_Installment__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Balance Tenure in Month </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Balance_Tenure_In_Months__c}</td>                
+            </tr>
+             <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Outstanding Amount </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Outstanding_Amount__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Original Amount </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Liabilityrecrddata.Original_Amount__c}</td>                
+            </tr>
+        </table>
+              <br/>
+        </apex:repeat>
+              <br/>
+         
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Collateral</th>  
+            </tr>
+                  </table>
+      
+              <br/>
+        <apex:repeat var="Collateralrecrddata" value="{!Collateralrecrd}">
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Collateral Details</th>  
+                  </tr>
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-weight: Bold;font-size: 11px;font-weight: bold;" width="30%" align="left">Security Offered:</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Collateralrecrddata.Security_Offered__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Property Owned By</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!Collateralrecrddata.Account.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Collateral Type</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" >{!Collateralrecrddata.Collateral_Type__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Collateral Value</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" >{!Collateralrecrddata.Asset_Value__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Area in SQ.FT</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Area_Sq_Ft__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Local Authority</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Local_Authority__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Property Details</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;"></td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Building/House Name</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Building_House_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Building/House Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Building_House_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">Wing</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">{!Collateralrecrddata.Wing__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Floor</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Floor__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Survey/Plot No</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Survey_Plot_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Pin_Code__r.Name}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.City__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Area_Taluka_District_Area_name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.State__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Country__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!Collateralrecrddata.Landmark__c}</td>                
+            </tr>
+            </table>
+            <br/>
+        </apex:repeat>     
+        <br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 16px;background:#C55A11;color: white;" align="center">Reference</th>  
+            </tr>
+                  </table>
+        <br/>
+        <apex:repeat var="referencrrecrdddata" value="{!referencrrecrd}">
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: Semi Bold;font-size: 12px;background:#F4B083;" align="center">Reference</th>  
+                  </tr>
+            
+            <tr >
+                
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Reference First Name</td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!referencrrecrdddata.Reference_First_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Reference Middle Name </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Middle_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Reference Last Name </td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Last_Name__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Mobile Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Mobile_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Email ID</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Email_Id__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landline Number</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Landline_No__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Occupation</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Occupation__c}</td>                
+            </tr>
+            
+            </table>
+            <br/>
+        
+        <br/><br/>
+        <table border="2" width="100%" style="border: 1px solid black;">
+            <tr >
+                <th colspan="3" style="font-weight: bold;background:#F4B083;font-size: 12px;" align="center">Address Details</th>  
+            </tr>
+
+            <tr >
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;font-weight: bold;" width="30%" align="left">Address1 </td>  
+                <td style="padding-left: 5px; padding-bottom: 3px;font-size: 11px;" width="70%" align="left">{!referencrrecrdddata.Reference_Address_1__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Address 2</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Address_2__c}</td>                
+            </tr>
+            <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Address 3</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Reference_Address_3__c}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Pin Code</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Pin_Code__r.Name}</td>                
+            </tr>
+        <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">City</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.City__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">District/Taluka</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.District__c}</td>                
+            </tr>
+                  <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">State</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.State__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Country</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Country__c}</td>                
+            </tr>
+                   <tr >
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;font-weight: bold;">Landmark</td>  
+                <td style="padding-left: 5px;
+                 padding-bottom: 3px;font-size: 11px;">{!referencrrecrdddata.Landmark__c}</td>                
+            </tr>
+
+    </table>  
+            
+                <br/>
+        </apex:repeat>
+               <div>
+    <h2 style="font-size: 12px;font-weight: bold;">Terms and Conditions</h2>
+    <p style="font-size: 11px;">
+☑
+1) I/We declare to have read the Application Form and confirm having received
+comprehensive information about the educational loans/scheme, fees,charges, cost etc., payable in relation to the educational loans and I/We am/are aware of all the terms and
+conditions for receiving the educational loan from Auxilo Finserve Private Limited. I/ We are
+also aware that the fees paid by me/us for availing an educational loan is non-refundable, even in the case of rejection/withdrawal of the loan application. 2). I/We have understood
+the terms and conditions and agree to abide by the same even in case of
+rejections/withdrawals of Education loan application. 3). I/We hereby declare to have
+provided true, correct and complete information in this loan application form and any other
+information/documents submitted by us and agree to indemnify Auxilo Finserve Private
+Limited for any losses or damages that may arise on account of any misstatement, misrepresentation or negligence in providing the information therein. 4). I/we declare no
+other education loan/ financial assistance for further studies of the applicant has been
+availed from any other bank or institution, other than as expressly stated otherwise in the
+Application Form. 5). I/we authorise Auxilo Finserve Private Limited, its associated
+companies, agents, agencies, partners, education institute, credit reporting agencies and any
+other entities to share the information contained in this Application Form and authorise
+them to verify any information in the Application Form including but not limited to
+enrolment, residence, employment, telephone, mobile verification, CIBIL or credit
+repayment history checks, documents verification, references check etc 6). I/we understand
+and acknowledge that Auxilo would not be able to process our loan application until all
+information as per Auxilo Finserve Private Limited’s credit and underwriting norms is
+provided by us and till all verifications and check are completed. Further we agree and
+undertake to fully cooperate with the Company or it’s officers, or it’s agents in complying
+with the same. 7). I/We understand and acknowledge that Auxilo shall have
+absolute discretion to reject my/our application and Auxilo shall not be responsible /liable in
+any matter whatsoever to us for any rejection or any delay in notifying us of such rejection
+including any costs, losses, damages or any expenses or consequences caused by such
+rejection of my/our application. 8). I understand that various factors bear an impact on the
+risk profile of the Customer. The rate of interest shall therefore vary from customer to
+customer depending upon the profile of the Customer. 9). It is the responsibility of the
+applicant to register under CGST Act 2017, SGST Act 2017, IGST Act 2017, and UTGST Act
+2017 (herein after individually/collectively called as “GST Law” as applicable to him and
+disclose to Auxilo Finserve Private Ltd (Auxilo) the registration number/s. In case violation of
+any provisions of taxation laws including GST Laws by the applicant, then applicant
+undertakes to indemnify Auxilo for any loss or claim or demand or penalty, if any, which may
+be incurred or suffered by Auxilo. 10). I/We declare that my/our current address would be
+considered for the purpose of computation of GST if I/we am/are not registered under GST
+Act. I/We declare that my/our current address registered under GST would be considered
+for the purpose of computation of GST if I/we am/are registered under GST Act. I/We hereby
+declare to intimate Auxilo Finserve Private Limited immediately upon any change in my/our
+address contact details for communication. I/We give my/our consent to receive any
+promotional material / scheme of Auxilo Finserve Private Ltd and its associates, partners and
+affiliates. I/We hereby consent to update / register my/our KYC documents on CKYC Registry
+and to receive information from Central KYC registry via SMS/email on the registered
+number/email address. QUERIES If applicant / borrower requires any clarification regarding
+their application / loan, they may write to AUXILO FINSERVE PVT. LTD., Office No. 63, 6th
+floor, Kalpataru Square, Kondivita Road, Andheri East, Mumbai 400059, Maharashtra, India. Tel.: 022 624 63333 between 9.30 am to 6.30 pm from Monday to Friday, and between 9.30
+        am and 3.30 pm on Saturday (except 2nd and 4th Saturday) except public holidays. </p>
+        
+<p style="font-size: 11px;">Disclaimer</p>
+
+<p style="font-size: 11px;">Note: The Company’s norms, does not permit acceptance of cash for any of the loan
+transactions. the company prefers all the loan related payments to be made from the
+applicant or coapplicant’s bank account through any banking means such as
+Cheque/DD/NEFT/RTGS/IMPs. Customer shall be solely responsible for Cash Transactions, if
+any, carried out with the Company’s representatives or associates. If the applicant is a minor
+or resides outside India and the co-applicant is the resident Indian, the address of the co- applicant will be considered as address on record for the purpose of determining place of
+supply under GST.</p>
+
+<p style="font-size: 11px;"> Application Logged In Date : </p>
+        
+<p style="font-size: 11px;">This is system generated document by Auxilo Finserve Pvt. Ltd.</p>
+</div>
+
+  </html>
+</apex:page>
